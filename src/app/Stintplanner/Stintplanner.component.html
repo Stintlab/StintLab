@@ -1,0 +1,31 @@
+<table>
+  <tbody>
+    <tr>
+      <td class="headline">
+        <span class="headline">Race Start</span>
+      </td>
+      <td>
+        <input type="datetime-local" [(ngModel)]="raceStart" (change)="onClick()"/>
+      </td>
+    </tr>
+    <tr>
+      <td class="headline">
+        <span class="headline">Race End</span>
+      </td>
+      <td>
+        <input type="datetime-local" [(ngModel)]="raceEnd" (change)="onClick()"/>
+      </td>
+    </tr>
+    <tr>
+      <td class="headline">
+        <span class="headline">Time Diff</span>
+      </td>
+      <td>
+        <input type="datetime" [(ngModel)]="distance"/>
+      </td>
+    </tr>
+    <tr>
+      <app-Drivers></app-Drivers>
+    </tr>
+  </tbody>
+</table>
