@@ -1,24 +1,19 @@
-import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { DriversComponent } from "../Drivers/Drivers.component";
+import { NavComponent } from '../../nav/nav.component';
+import { DrivermanagerComponent } from '../drivermanager/drivermanager.component';
+import { PanelModule } from 'primeng/panel';
 
 @Component({
-  selector: 'app-Stintplanner',
-  imports: [CommonModule, FormsModule, DriversComponent],
-  templateUrl: './Stintplanner.component.html',
-  styleUrls: ['./Stintplanner.component.css']
+  selector: 'app-stintplanner',
+  imports: [NavComponent, DrivermanagerComponent, PanelModule],
+  templateUrl: './stintplanner.component.html',
+  styleUrl: './stintplanner.component.scss'
 })
-export class StintplannerComponent {
-  raceStart = '';
-  raceEnd = '';
-  distance = '';
+export class StintplannerComponent implements OnInit {
 
 
-  onClick() {
-    let dist = Date.parse(this.raceEnd) - Date.parse(this.raceStart);
-    if(Number.isSafeInteger(dist)){
-      this.distance = String(dist / 1000);
-    }
+
+  ngOnInit(): void {
   }
+
 }

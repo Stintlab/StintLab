@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StintplannerComponent } from './stintplanner.component';
+import { DrivermanagerComponent } from './drivermanager.component';
 
-describe('StintplannerComponent', () => {
-  let component: StintplannerComponent;
-  let fixture: ComponentFixture<StintplannerComponent>;
+describe('DrivermanagerComponent', () => {
+  let component: DrivermanagerComponent;
+  let fixture: ComponentFixture<DrivermanagerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [StintplannerComponent]
+      imports: [DrivermanagerComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(StintplannerComponent);
+    fixture = TestBed.createComponent(DrivermanagerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,27 @@
+<p-inputgroup>
+    <p-inputgroup-addon>
+        <i class="pi pi-user"></i>
+    </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <input pInputText id="driverName" [(ngModel)]="driver.name" (ngModelChange)="submit()" />
+      <label for="driverName">Driver name</label>
+    </p-floatlabel>
+</p-inputgroup>
+<p-inputgroup>
+    <p-inputgroup-addon>
+        <i class="pi pi-cog"></i>
+      </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+    <p-inputnumber id="driverFuelConsumption" [(ngModel)]="driver.fuelConsumption" (ngModelChange)="submit()" />
+      <label for="driverFuelConsumption">Fuel Consumption per Lap</label>
+    </p-floatlabel>
+</p-inputgroup>
+<p-inputgroup>
+    <p-inputgroup-addon>
+        <i class="pi pi-stopwatch"></i>
+    </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <input pInputText id="driverLapTime" [(ngModel)]="driver.laptime" (ngModelChange)="submit()" />
+      <label for="driverLapTime">Average Lap Time</label>
+    </p-floatlabel>
+</p-inputgroup>

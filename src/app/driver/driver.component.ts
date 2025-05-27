@@ -1,0 +1,39 @@
+import { FormsModule } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { DriverModel } from '../../models/DriverModel';
+import { FloatLabelModule } from 'primeng/floatlabel';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { InputMaskModule } from 'primeng/inputmask';
+import { InputTextModule } from 'primeng/inputtext';
+
+@Component({
+  selector: 'app-driver',
+  imports: [
+    FloatLabelModule,
+    FormsModule,
+    InputGroupModule,
+    InputGroupAddonModule,
+    InputNumberModule,
+    InputMaskModule,
+    InputTextModule
+  ],
+  templateUrl: './driver.component.html',
+  styleUrl: './driver.component.scss'
+})
+export class DriverComponent implements OnInit {
+
+  @Input() driver! : DriverModel;
+  @Output() driverEvent : EventEmitter<DriverModel> = new EventEmitter();
+
+
+  ngOnInit(): void {
+  }
+
+  submit(){
+    this.driverEvent.next(this.driver);
+  }
+}
+
+

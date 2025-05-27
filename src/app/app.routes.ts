@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { StintplannerComponent } from './Stintplanner/Stintplanner.component';
+import { StintplannerComponent } from './stintplanner/stintplanner.component';
 
 export const routes: Routes = [
   {
