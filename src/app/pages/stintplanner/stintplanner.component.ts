@@ -1,7 +1,6 @@
-import { RacemanagerComponent } from './../racemanager/racemanager.component';
+import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { Component, OnInit } from '@angular/core';
-import { NavComponent } from '../../nav/nav.component';
-import { DrivermanagerComponent } from '../drivermanager/drivermanager.component';
+import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
 import { PanelModule } from 'primeng/panel';
 import { DriverModel } from '../../models/DriverModel';
 import { RaceModel } from '../../models/RaceModel';
@@ -9,7 +8,6 @@ import { RaceModel } from '../../models/RaceModel';
 @Component({
   selector: 'app-stintplanner',
   imports: [
-    NavComponent,
     PanelModule,
     DrivermanagerComponent,
     RacemanagerComponent
@@ -19,7 +17,7 @@ import { RaceModel } from '../../models/RaceModel';
 })
 export class StintplannerComponent implements OnInit {
   drivers: DriverModel[] = [];
-  race: RaceModel = new RaceModel("", 0, 0);
+  race: RaceModel = new RaceModel(new Date(), 0, 0);
   ngOnInit(): void {
   }
 
