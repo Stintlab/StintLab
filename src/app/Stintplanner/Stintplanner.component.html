@@ -1,9 +1,19 @@
 <app-nav></app-nav>
-<div style="width: 33%;">
-  <p-panel header="Drivers" [toggleable]="true">
-    <p class="m-0">
-        <app-drivermanager></app-drivermanager>
-    </p>
-  </p-panel>
+<div class="container">
+  <div style="order: 1;">
+    <p-panel header="Race">
+      <p class="m-0">
+          <app-racemanager [race]="race"></app-racemanager>
+      </p>
+    </p-panel>
+  </div>
+  <div style="order: 1;">
+    <p-panel header="Drivers">
+      <p class="m-0">
+          <app-drivermanager [drivers]="drivers"></app-drivermanager>
+      </p>
+    </p-panel>
+  </div>
 </div>
-
+<div>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { DriverModel } from '../../models/DriverModel';
 import { DriverComponent } from '../driver/driver.component';
@@ -10,16 +10,14 @@ import { DriverComponent } from '../driver/driver.component';
   styleUrl: './drivermanager.component.scss'
 })
 export class DrivermanagerComponent implements OnInit {
+  @Input() drivers!: DriverModel[];
+  @Output() driversEvent: EventEmitter<DriverModel[]> = new EventEmitter();
 
-  drivers: DriverModel[] = [new DriverModel("Udo", 3.2, "", false), new DriverModel("Daniel", 2, "", true)];
-
-    ngOnInit(): void {
+  ngOnInit(): void {
   }
 
-  active(driver: DriverModel){
-    if(driver.isActive)
-      return "p-tab-active";
-    else
-      return "";
+  addDriver(){
+    console.log("driver added");
+    this.drivers.push(new DriverModel("Driver " + (this.drivers.length + 1)));
   }
 }

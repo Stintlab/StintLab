@@ -1,0 +1,34 @@
+<p-inputgroup>
+    <p-inputgroup-addon>
+        <i class="pi pi-calendar"></i>
+    </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <p-datepicker id="raceStart" [(ngModel)]="race.raceStart"/>
+      <label for="raceStart">Race Start</label>
+    </p-floatlabel>
+    <p-inputgroup-addon>
+        <i class="pi pi-calendar-clock"></i>
+      </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <input pInputText id="raceDuration" />
+      <label for="raceDuration">Race Duration</label>
+    </p-floatlabel>
+</p-inputgroup>
+<p-inputgroup>
+    <p-inputgroup-addon>
+        <i class="pi pi-car"></i>
+    </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <input pInputText id="fuelTankSize" [(ngModel)]="race.fuelTankSize" />
+      <label for="fuelTankSize">Fueltank Size</label>
+    </p-floatlabel>
+</p-inputgroup>
+<p-inputgroup>
+    <p-inputgroup-addon>
+        <i class="pi pi-map-marker"></i>
+    </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <input pInputText id="driveThrough" [(ngModel)]="race.driveThrough" />
+      <label for="driveThrough">Time lost during pit excluding service</label>
+    </p-floatlabel>
+</p-inputgroup>

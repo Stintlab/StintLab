@@ -12,7 +12,7 @@
         <i class="pi pi-cog"></i>
       </p-inputgroup-addon>
     <p-floatlabel variant="in">
-    <p-inputnumber id="driverFuelConsumption" [(ngModel)]="driver.fuelConsumption" (ngModelChange)="submit()" />
+      <input pInputText id="driverFuelConsumption" [(ngModel)]="driver.fuelConsumption" (ngModelChange)="submit()" />
       <label for="driverFuelConsumption">Fuel Consumption per Lap</label>
     </p-floatlabel>
 </p-inputgroup>
