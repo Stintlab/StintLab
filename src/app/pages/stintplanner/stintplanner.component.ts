@@ -33,50 +33,78 @@ export class StintplannerComponent implements OnInit {
   }
 
   calculateStints(){
+    //build driver name to model map
+    var driverNamesToModels: Map<String, DriverModel> = new Map();
+    this.drivers.forEach(d => driverNamesToModels.set(d.name, d));
+
+    //fetch previously defined drivers for each stint
+    var stintDrivers: string[] = this.stints
+      .filter(s => s.driver != undefined)
+      .map(s => s.driver!.name!);
+
+    //reset current stints
     this.stints = [];
     if(!this.validateInputs()){
       this.logger.info("invalid Inputs, aborting stint calculation");
       return;
     }
     this.logger.info("valid inputs, calculating stints");
-    var driver = this.drivers[0];
-
     var totalTime: number = this.race.raceDurationInMilliseconds!;
-    var lapTime: number = driver.laptimeInMilliseconds!;
     var tankSize: number = this.race.fuelTankSize!;
-    var fuelPerLap: number = driver.fuelConsumption!;
-    var refuelRate: number = 10; //TODO add this to inputs
+    var refuelRate: number = this.race.refuelRate!;
+    //as this field is linked to an input, its converted to millis here
     var stopPenalty: number = this.race.driveThrough! * 1000;
-
-    var totalLaps: number = 0;
-    var stops: number = 0;
-    var racingTime: number = 0;
-
-    var lapsPerFullStint: number = Math.floor(tankSize / fuelPerLap);
-    var stintRaceTime: number = lapsPerFullStint * lapTime;
     var refuelTankTime: number = Math.ceil(tankSize/refuelRate) * 1000;
+    //TODO calculate first stint without refueling so the refuel time is calculated for the upcoming sprint, not the one just completed
+    var totalLaps: number = 0;
+    var stintCounter: number = 0;
+    var racingTime: number = 0;
+    var driver: DriverModel = this.getOrDefaultDriver(stintDrivers, driverNamesToModels, stintCounter);;
+    var lapsPerFullStint: number = Math.floor(tankSize / driver.fuelConsumption!);
+    var stintRaceTime: number = lapsPerFullStint * driver.laptimeInMilliseconds!;
     var fullStintTime: number = stintRaceTime + refuelTankTime + stopPenalty;
     while(racingTime + fullStintTime < totalTime){
       racingTime += fullStintTime;
       totalLaps += lapsPerFullStint;
-      this.stints.push(new StintModel(++stops, driver, lapsPerFullStint));
+      this.stints.push(new StintModel(stintCounter, driver, lapsPerFullStint));
+      stintCounter++;
+      driver = this.getOrDefaultDriver(stintDrivers, driverNamesToModels, stintCounter);
+      lapsPerFullStint = Math.floor(tankSize / driver.fuelConsumption!);
+      stintRaceTime = lapsPerFullStint * driver.laptimeInMilliseconds!;
+      fullStintTime = stintRaceTime + refuelTankTime + stopPenalty;
     }
     var remainingTime: number = totalTime - racingTime;
-    var atleastRemainingLaps = Math.floor(remainingTime / lapTime);
-    var fuelForAtLeastRemainingLaps = fuelPerLap * atleastRemainingLaps;
-    var refuelTimeForAtleastRemainingLaps = stopPenalty + Math.ceil(fuelForAtLeastRemainingLaps / refuelRate);
-    var atleastRemainingRaceTime = lapTime * atleastRemainingLaps + refuelTimeForAtleastRemainingLaps;
-
-    if(remainingTime > atleastRemainingRaceTime){
-      atleastRemainingLaps+= 1;
+    //if the race ends perfectly, we dont need to calculate another partial stint
+    if(remainingTime <= 0){
+      return;
     }
-    fuelForAtLeastRemainingLaps = fuelPerLap * atleastRemainingLaps;
-    refuelTimeForAtleastRemainingLaps = stopPenalty + Math.ceil(fuelForAtLeastRemainingLaps / refuelRate);
-    atleastRemainingRaceTime = lapTime * atleastRemainingLaps + refuelTimeForAtleastRemainingLaps;
+    var remainingLaps = Math.floor(remainingTime / driver.laptimeInMilliseconds!);
+    var fuelNeededForRemainingLaps = driver.fuelConsumption! * remainingLaps;
+    var refuelTimeForRemainingLaps = stopPenalty + Math.ceil(fuelNeededForRemainingLaps * 1000 / refuelRate) ;
+    var remainingRaceTime = driver.laptimeInMilliseconds! * remainingLaps + refuelTimeForRemainingLaps;
 
-    racingTime += atleastRemainingRaceTime;
-    totalLaps += atleastRemainingLaps;
-    this.stints.push(new StintModel(++stops, driver, atleastRemainingLaps));
+    if(remainingTime > remainingRaceTime){
+      remainingLaps+= 1;
+    }
+    fuelNeededForRemainingLaps = driver.fuelConsumption! * remainingLaps;
+    refuelTimeForRemainingLaps = stopPenalty + Math.ceil(fuelNeededForRemainingLaps / refuelRate);
+    remainingRaceTime = driver.laptimeInMilliseconds! * remainingLaps + refuelTimeForRemainingLaps;
+
+    racingTime += remainingRaceTime;
+    totalLaps += remainingLaps;
+    this.stints.push(new StintModel(++stintCounter, driver, remainingLaps));
+  }
+
+  private getOrDefaultDriver(stintDrivers: string[], driverNamesToModels: Map<String, DriverModel>, stintCounter: number) : DriverModel {
+    if(stintDrivers.length <= stintCounter){
+      return this.drivers[0];
+    }
+    var driverName: string = stintDrivers[stintCounter];
+    var driverModel: DriverModel | undefined = driverNamesToModels.get(driverName);
+    if(driverModel == undefined){
+      return this.drivers[0];
+    }
+    return driverModel!;
   }
 
   private validateInputs() : boolean {

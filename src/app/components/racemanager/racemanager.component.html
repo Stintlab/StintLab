@@ -47,6 +47,20 @@
 </p-inputgroup>
 <p-inputgroup>
     <p-inputgroup-addon>
+        <i class="pi pi-clock"></i>
+    </p-inputgroup-addon>
+    <p-floatlabel variant="in">
+      <p-inputnumber id="refuelRate"
+        [(ngModel)]="race.refuelRate"
+        (ngModelChange)="submitChange()"
+        [class.ng-dirty]="race.refuelRate == undefined"
+        [class.ng-invalid]="race.refuelRate == undefined"
+      />
+      <label for="refuelRate">Refuel rate in Liters per Second</label>
+    </p-floatlabel>
+</p-inputgroup>
+<p-inputgroup>
+    <p-inputgroup-addon>
         <i class="pi pi-map-marker"></i>
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
