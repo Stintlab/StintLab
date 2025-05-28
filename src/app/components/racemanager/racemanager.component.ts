@@ -5,9 +5,11 @@ import { InputGroupModule } from 'primeng/inputgroup';
 import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { RaceModel } from '../../models/RaceModel';
+
 
 @Component({
   selector: 'app-racemanager',
@@ -17,6 +19,7 @@ import { RaceModel } from '../../models/RaceModel';
     InputGroupModule,
     InputGroupAddonModule,
     InputNumberModule,
+    InputMaskModule,
     InputTextModule,
     DatePickerModule,
     SelectModule
@@ -26,11 +29,33 @@ import { RaceModel } from '../../models/RaceModel';
 })
 export class RacemanagerComponent implements OnInit {
   @Input() race! : RaceModel;
-  @Output() raceChanged : EventEmitter<RaceModel> = new EventEmitter();
+  @Output() raceChange : EventEmitter<RaceModel> = new EventEmitter();
+  durationInput: string = "";
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  parseDuration(){
+    if(this.durationInput.includes('_')){
+      this.race.raceDurationInSeconds = undefined;
+      return;
+    }
+    var split = this.durationInput.split(':');
+    var hours = Number.parseInt(split[0]);
+    var minutes = Number.parseInt(split[1]);
+    var seconds = Number.parseInt(split[2]);
+    if(Number.isNaN(hours) || Number.isNaN(minutes) || Number.isNaN(seconds)){
+      return;
+    }
+    var totalMillis = ((hours * 60) + minutes) * 60 + seconds;
+    this.race.raceDurationInSeconds = totalMillis;
+  }
+
+  submitChange(){
+    console.log(this.race.raceDurationInSeconds)
+    this.raceChange.next(this.race);
   }
 
 }

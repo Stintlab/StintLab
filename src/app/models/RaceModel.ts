@@ -1,11 +1,6 @@
 export class RaceModel {
-  raceStart : Date;
-  fuelTankSize: Number;
-  driveThrough: Number;
-
-  constructor(raceStart: Date, fuelTankSize: Number, driveThrough: Number){
-    this.raceStart = raceStart;
-    this.fuelTankSize = fuelTankSize;
-    this.driveThrough = driveThrough;
-  }
+  raceStart : Date | undefined;
+  raceDurationInSeconds: number | undefined;
+  fuelTankSize: number | undefined;
+  driveThrough: number | undefined;
 }

@@ -1,3 +1,6 @@
-.p-datepicker-input {
-  width: 100%;
+::ng-deep .p-datepicker {
+  width: auto !important;
+}
+::ng-deep .p-inputmask {
+  width: auto !important;
 }

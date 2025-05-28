@@ -25,14 +25,14 @@ import { DriverModel } from '../../models/DriverModel';
 export class DriverComponent implements OnInit {
 
   @Input() driver! : DriverModel;
-  @Output() driverEvent : EventEmitter<DriverModel> = new EventEmitter();
+  @Output() driverChange : EventEmitter<DriverModel> = new EventEmitter();
 
 
   ngOnInit(): void {
   }
 
-  submit(){
-    this.driverEvent.next(this.driver);
+  submitChange(){
+    this.driverChange.next(this.driver);
   }
 }
 

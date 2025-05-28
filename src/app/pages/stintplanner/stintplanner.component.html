@@ -1,15 +1,15 @@
 <div class="container">
-  <div style="order: 1;">
+  <div style="order: 1; min-width: 30vw; min-height: 10vh; max-width: 70vw; max-height: 90vh;">
     <p-panel header="Race">
       <p class="m-0">
-          <app-racemanager [race]="race"></app-racemanager>
+          <app-racemanager [(race)]="race"></app-racemanager>
       </p>
     </p-panel>
   </div>
-  <div style="order: 1;">
+  <div style="order: 1; min-width: 30vw; min-height: 10vh; max-width: 70vw; max-height: 90vh;">
     <p-panel header="Drivers">
       <p class="m-0">
-          <app-drivermanager [drivers]="drivers"></app-drivermanager>
+          <app-drivermanager [(drivers)]="drivers"></app-drivermanager>
       </p>
     </p-panel>
   </div>

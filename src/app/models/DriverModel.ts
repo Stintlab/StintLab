@@ -1,11 +1,9 @@
 export class DriverModel {
   name: string;
-  fuelConsumption: string = "";
-  laptime : string = "";
-  isActive: boolean;
+  fuelConsumption: number | undefined;
+  laptime: number | undefined;
 
   constructor(name: string){
     this.name = name;
-    this.isActive = true;
   }
 }

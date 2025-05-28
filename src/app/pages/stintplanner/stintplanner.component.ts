@@ -17,8 +17,8 @@ import { RaceModel } from '../../models/RaceModel';
 })
 export class StintplannerComponent implements OnInit {
   drivers: DriverModel[] = [];
-  race: RaceModel = new RaceModel(new Date(), 0, 0);
+  race: RaceModel = new RaceModel();
+
   ngOnInit(): void {
   }
-
 }

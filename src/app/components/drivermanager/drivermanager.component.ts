@@ -2,22 +2,30 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
 import { DriverModel } from '../../models/DriverModel';
 import { DriverComponent } from '../driver/driver.component';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-drivermanager',
-  imports: [TabsModule, DriverComponent],
+  imports: [TabsModule, DriverComponent, ButtonModule],
   templateUrl: './drivermanager.component.html',
   styleUrl: './drivermanager.component.scss'
 })
 export class DrivermanagerComponent implements OnInit {
   @Input() drivers!: DriverModel[];
-  @Output() driversEvent: EventEmitter<DriverModel[]> = new EventEmitter();
+  @Output() driversChange: EventEmitter<DriverModel[]> = new EventEmitter();
+  driverTab: number = -1;
 
   ngOnInit(): void {
+    this.addDriver();
   }
 
   addDriver(){
-    console.log("driver added");
+    this.driverTab = this.drivers.length;
     this.drivers.push(new DriverModel("Driver " + (this.drivers.length + 1)));
   }
+
+  submitChange(){
+    this.driversChange.next(this.drivers);
+  }
+
 }

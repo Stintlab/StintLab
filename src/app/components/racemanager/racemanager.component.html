@@ -2,19 +2,33 @@
 <p-inputgroup>
   <p-inputgroup-addon>
     <i class="pi pi-calendar"></i>
-</p-inputgroup-addon>
-<p-floatlabel variant="in">
-  <p-datepicker id="raceStart" [(ngModel)]="race.raceStart"/>
-  <label for="raceStart">Race Start</label>
-</p-floatlabel>
+  </p-inputgroup-addon>
+  <p-floatlabel variant="in">
+      <p-datepicker
+        id="raceStart"
+        [showTime]="true"
+        hourFormat="24"
+        [(ngModel)]="race.raceStart"
+        (ngModelChange)="submitChange()"
+        [class.ng-dirty]="race.raceStart == undefined"
+        [class.ng-invalid]="race.raceStart == undefined"
+      />
+      <label for="raceStart">Race Start</label>
+  </p-floatlabel>
 </p-inputgroup>
 <p-inputgroup>
     <p-inputgroup-addon>
         <i class="pi pi-calendar-clock"></i>
       </p-inputgroup-addon>
     <p-floatlabel variant="in">
-      <input pInputText id="raceDuration" />
-      <label for="raceDuration">Race Duration</label>
+      <p-inputmask
+        mask="99:99:99"
+        [(ngModel)]="durationInput"
+        (ngModelChange)="parseDuration(); submitChange();"
+        [class.ng-dirty]="race.raceDurationInSeconds == undefined"
+        [class.ng-invalid]="race.raceDurationInSeconds == undefined"
+      />
+      <label for="raceDuration">Race Duration (HH:MM:SS)</label>
     </p-floatlabel>
 </p-inputgroup>
 <p-inputgroup>
@@ -22,8 +36,13 @@
         <i class="pi pi-car"></i>
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
-      <input pInputText id="fuelTankSize" [(ngModel)]="race.fuelTankSize" />
-      <label for="fuelTankSize">Fueltank Size</label>
+      <p-inputnumber id="fuelTankSize"
+        [(ngModel)]="race.fuelTankSize"
+        (ngModelChange)="submitChange()"
+        [class.ng-dirty]="race.fuelTankSize == undefined"
+        [class.ng-invalid]="race.fuelTankSize == undefined"
+      />
+      <label for="fuelTankSize">Fueltank Size in Liters</label>
     </p-floatlabel>
 </p-inputgroup>
 <p-inputgroup>
@@ -31,7 +50,12 @@
         <i class="pi pi-map-marker"></i>
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
-      <input pInputText id="driveThrough" [(ngModel)]="race.driveThrough" />
-      <label for="driveThrough">Time lost during pit excluding service</label>
+      <p-inputnumber id="driveThrough"
+        [(ngModel)]="race.driveThrough"
+        (ngModelChange)="submitChange()"
+        [class.ng-dirty]="race.driveThrough == undefined"
+        [class.ng-invalid]="race.driveThrough == undefined"
+      />
+      <label for="driveThrough">Time lost during pit excluding service in seconds</label>
     </p-floatlabel>
 </p-inputgroup>

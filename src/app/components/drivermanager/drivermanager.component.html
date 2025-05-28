@@ -1,14 +1,14 @@
-<p-tabs value="0" scrollable>
+<p-button icon="pi pi-plus" [rounded]="true" [text]="true" (click)="addDriver(); submitChange();" />
+<p-tabs [value]="driverTab" scrollable>
     <p-tablist>
         @for (driver of drivers; track $index) {
             <p-tab [value]="$index">{{driver.name}}</p-tab>
         }
-        <p-tab><a (mousedown)="addDriver()">Add driver</a></p-tab>
     </p-tablist>
     <p-tabpanels>
         @for (driver of drivers; track $index) {
             <p-tabpanel [value]="$index">
-                <app-driver [driver]="drivers[$index]"></app-driver>
+                <app-driver [(driver)]="drivers[$index]" (driverChange)="submitChange();"></app-driver>
             </p-tabpanel>
         }
     </p-tabpanels>
