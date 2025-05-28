@@ -30,31 +30,31 @@ import { RaceModel } from '../../models/RaceModel';
 export class RacemanagerComponent implements OnInit {
   @Input() race! : RaceModel;
   @Output() raceChange : EventEmitter<RaceModel> = new EventEmitter();
-  durationInput: string = "";
+  raceDurationInput: string = "";
 
   constructor() { }
 
   ngOnInit() {
   }
 
-  parseDuration(){
-    if(this.durationInput.includes('_')){
-      this.race.raceDurationInSeconds = undefined;
+  parseRaceDuration(){
+    if(this.raceDurationInput.includes('_')){
+      this.race.raceDurationInMilliseconds = undefined;
       return;
     }
-    var split = this.durationInput.split(':');
+    var split = this.raceDurationInput.split(':');
     var hours = Number.parseInt(split[0]);
     var minutes = Number.parseInt(split[1]);
     var seconds = Number.parseInt(split[2]);
     if(Number.isNaN(hours) || Number.isNaN(minutes) || Number.isNaN(seconds)){
       return;
     }
-    var totalMillis = ((hours * 60) + minutes) * 60 + seconds;
-    this.race.raceDurationInSeconds = totalMillis;
+    var totalMillis = (((hours * 60) + minutes) * 60 + seconds) * 1000;
+    this.race.raceDurationInMilliseconds = totalMillis;
   }
 
   submitChange(){
-    console.log(this.race.raceDurationInSeconds)
+    console.log(this.race.raceDurationInMilliseconds)
     this.raceChange.next(this.race);
   }
 

@@ -3,7 +3,13 @@
         <i class="pi pi-user"></i>
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
-      <input pInputText id="driverName" [(ngModel)]="driver.name" (ngModelChange)="submitChange()" />
+      <input pInputText
+        id="driverName"
+        [(ngModel)]="driver.name"
+        (ngModelChange)="submitChange()"
+        [class.ng-dirty]="driver.name == undefined || driver.name == ''"
+        [class.ng-invalid]="driver.name == undefined || driver.name == ''"
+      />
       <label for="driverName">Driver name</label>
     </p-floatlabel>
 </p-inputgroup>
@@ -12,8 +18,13 @@
         <i class="pi pi-cog"></i>
       </p-inputgroup-addon>
     <p-floatlabel variant="in">
-      <input pInputText id="driverFuelConsumption" [(ngModel)]="driver.fuelConsumption" (ngModelChange)="submitChange()" />
-      <label for="driverFuelConsumption">Fuel Consumption per Lap</label>
+      <p-inputnumber id="driverFuelConsumption"
+        [(ngModel)]="driver.fuelConsumption"
+        (ngModelChange)="submitChange()"
+        [class.ng-dirty]="driver.fuelConsumption == undefined"
+        [class.ng-invalid]="driver.fuelConsumption == undefined"
+      />
+      <label for="driverFuelConsumption">Fuel Consumption per Lap in Liters</label>
     </p-floatlabel>
 </p-inputgroup>
 <p-inputgroup>
@@ -21,7 +32,14 @@
         <i class="pi pi-stopwatch"></i>
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
-      <input pInputText id="driverLapTime" [(ngModel)]="driver.laptime" (ngModelChange)="submitChange()" />
+      <p-inputmask
+        mask="99:99:99"
+        [(ngModel)]="laptimeInput"
+        (ngModelChange)="parseLapTime(); submitChange();"
+        [class.ng-dirty]="driver.laptimeInMilliseconds == undefined"
+        [class.ng-invalid]="driver.laptimeInMilliseconds == undefined"
+      />
+      <input pInputText id="driverLapTime" [(ngModel)]="driver.laptimeInMilliseconds" (ngModelChange)="submitChange()" />
       <label for="driverLapTime">Average Lap Time</label>
     </p-floatlabel>
 </p-inputgroup>

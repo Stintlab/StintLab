@@ -23,10 +23,10 @@
     <p-floatlabel variant="in">
       <p-inputmask
         mask="99:99:99"
-        [(ngModel)]="durationInput"
-        (ngModelChange)="parseDuration(); submitChange();"
-        [class.ng-dirty]="race.raceDurationInSeconds == undefined"
-        [class.ng-invalid]="race.raceDurationInSeconds == undefined"
+        [(ngModel)]="raceDurationInput"
+        (ngModelChange)="parseRaceDuration(); submitChange();"
+        [class.ng-dirty]="race.raceDurationInMilliseconds == undefined"
+        [class.ng-invalid]="race.raceDurationInMilliseconds == undefined"
       />
       <label for="raceDuration">Race Duration (HH:MM:SS)</label>
     </p-floatlabel>

@@ -23,12 +23,28 @@ import { DriverModel } from '../../models/DriverModel';
   styleUrl: './driver.component.scss'
 })
 export class DriverComponent implements OnInit {
-
   @Input() driver! : DriverModel;
   @Output() driverChange : EventEmitter<DriverModel> = new EventEmitter();
-
+  laptimeInput: string = "";
 
   ngOnInit(): void {
+  }
+
+  parseLapTime(){
+    if(this.laptimeInput.includes('_')){
+      this.driver.laptimeInMilliseconds = undefined;
+      return;
+    }
+    var colonIndex = this.laptimeInput.indexOf(':');
+    var dotIndex = this.laptimeInput.indexOf('.');
+    var minutes = Number.parseInt(this.laptimeInput.substring(0, colonIndex));
+    var seconds = Number.parseInt(this.laptimeInput.substring(colonIndex+1, dotIndex));
+    var milliseconds = Number.parseInt(this.laptimeInput.substring(dotIndex+1));
+    if(Number.isNaN(minutes) || Number.isNaN(seconds) || Number.isNaN(milliseconds)){
+      return;
+    }
+    var totalMillis = (minutes * 60 + seconds) * 1000 + milliseconds;
+    this.driver.laptimeInMilliseconds = totalMillis;
   }
 
   submitChange(){
