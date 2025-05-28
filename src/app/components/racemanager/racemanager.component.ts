@@ -54,7 +54,6 @@ export class RacemanagerComponent implements OnInit {
   }
 
   submitChange(){
-    console.log(this.race.raceDurationInMilliseconds)
     this.raceChange.next(this.race);
   }
 

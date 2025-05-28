@@ -33,13 +33,12 @@
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
       <p-inputmask
-        mask="99:99:99"
+        mask="99:99.999"
         [(ngModel)]="laptimeInput"
         (ngModelChange)="parseLapTime(); submitChange();"
         [class.ng-dirty]="driver.laptimeInMilliseconds == undefined"
         [class.ng-invalid]="driver.laptimeInMilliseconds == undefined"
       />
-      <input pInputText id="driverLapTime" [(ngModel)]="driver.laptimeInMilliseconds" (ngModelChange)="submitChange()" />
       <label for="driverLapTime">Average Lap Time</label>
     </p-floatlabel>
 </p-inputgroup>

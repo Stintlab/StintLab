@@ -1,6 +1,7 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 import { providePrimeNG } from 'primeng/config';
 import Aura from '@primeng/themes/aura';
 
@@ -15,6 +16,10 @@ export const appConfig: ApplicationConfig = {
         theme: {
             preset: Aura
         },
-    })
+    }),
+    importProvidersFrom(LoggerModule.forRoot({
+      level: NgxLoggerLevel.DEBUG,
+      disableConsoleLogging: false
+    }))
   ]
 };
