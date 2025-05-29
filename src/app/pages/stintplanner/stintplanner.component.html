@@ -17,6 +17,7 @@
 <!-- stint table -->
 <div>
   @if (showTable) {
+  <p>Gesamt Anzahl Runden: {{racePlan!.totalLapCount}}, Anzahl Stints: {{racePlan!.stints.length}}, erwartetes Ende: {{racePlan!.raceEnd}} </p>
   <p-table [value]="racePlan!.stints!" [tableStyle]="{ 'min-width': '50rem' }">
       <ng-template #header>
           <tr>
