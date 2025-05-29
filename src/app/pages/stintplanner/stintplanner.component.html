@@ -1,60 +1,74 @@
 <div class="container">
-  <div style="order: 1; min-width: 30vw; min-height: 10vh; max-width: 70vw; max-height: 90vh;">
-    <p-panel header="Race">
-      <p class="m-0">
-          <app-racemanager [(race)]="race" (raceChange)="calculateStints()"></app-racemanager>
-      </p>
-    </p-panel>
+  <div class="configuration">
+      <p-panel class="race" header="Race">
+        <p class="m-0">
+          <app-racemanager
+            [(race)]="race"
+            (raceChange)="calculateStints()"
+          ></app-racemanager>
+        </p>
+      </p-panel>
+      <p-panel class="driver" header="Drivers">
+        <p class="m-0">
+          <app-drivermanager
+            [(drivers)]="drivers"
+            (driversChange)="calculateStints()"
+          ></app-drivermanager>
+        </p>
+      </p-panel>
   </div>
-  <div style="order: 1; min-width: 30vw; min-height: 10vh; max-width: 70vw; max-height: 90vh;">
-    <p-panel header="Drivers">
-      <p class="m-0">
-          <app-drivermanager [(drivers)]="drivers" (driversChange)="calculateStints()"></app-drivermanager>
-      </p>
-    </p-panel>
+  <div>
+    @if (showTable) {
+    <p>
+      Gesamt Anzahl Runden: {{ racePlan!.totalLapCount }}, Anzahl Stints:
+      {{ racePlan!.stints.length }}, erwartetes Ende: {{ racePlan!.raceEnd }}
+    </p>
+    <p-table
+      [value]="racePlan!.stints!"
+      [tableStyle]="{ 'min-width': '50rem' }"
+    >
+      <ng-template #header>
+        <tr>
+          <th>Stint #</th>
+          <th>Driver</th>
+          <th>Stint Start Time</th>
+          <th>Laps in Stint</th>
+          <th>Fuel used in Stint</th>
+          <th>Time on Track</th>
+          <th>Time in Pitlane</th>
+          <th>Time for Refueling</th>
+          <th>Total Stint Duration</th>
+          <th>Stint End Time</th>
+        </tr>
+      </ng-template>
+      <ng-template #body let-stint>
+        <tr>
+          <td>{{ stint.counter }}</td>
+          <td>
+            <p-select
+              [options]="drivers"
+              [ngModel]="stint.driver.name"
+              (ngModelChange)="
+                updateDriver($event, stint.counter); calculateStints()
+              "
+              optionLabel="name"
+              placeholder="{{ stint.driver.name }}"
+              class="w-full md:w-56"
+              appendTo="body"
+            />
+          </td>
+          <td>{{ stint.stintStartTime }}</td>
+          <td>{{ stint.laps }}</td>
+          <td>{{ stint.fuelUsed | number : "1.0-2" }}</td>
+          <td>{{ stint.timeDriven | millisToDuration }}</td>
+          <td>{{ stint.timeInPitlane | millisToDuration }}</td>
+          <td>{{ stint.refuelTime | millisToDuration }}</td>
+          <td>{{ stint.totalStintLength | millisToDuration }}</td>
+          <td>{{ stint.stintEndTime }}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    }
   </div>
 </div>
 <!-- stint table -->
-<div>
-  @if (showTable) {
-  <p>Gesamt Anzahl Runden: {{racePlan!.totalLapCount}}, Anzahl Stints: {{racePlan!.stints.length}}, erwartetes Ende: {{racePlan!.raceEnd}} </p>
-  <p-table [value]="racePlan!.stints!" [tableStyle]="{ 'min-width': '50rem' }">
-      <ng-template #header>
-          <tr>
-              <th>Stint #</th>
-              <th>Driver</th>
-              <th>Stint Start Time</th>
-              <th>Laps in Stint</th>
-              <th>Fuel used in Stint</th>
-              <th>Time on Track</th>
-              <th>Time in Pitlane</th>
-              <th>Time for Refueling</th>
-              <th>Total Stint Duration</th>
-              <th>Stint End Time</th>
-          </tr>
-      </ng-template>
-      <ng-template #body let-stint>
-          <tr>
-            <td>{{stint.counter}}</td>
-            <td>
-              <p-select
-              [options]="drivers"
-              [ngModel]="stint.driver.name"
-              (ngModelChange)="updateDriver($event, stint.counter); calculateStints();"
-              optionLabel="name"
-              placeholder={{stint.driver.name}}
-              class="w-full md:w-56" />
-            </td>
-            <td>{{stint.stintStartTime}}</td>
-            <td>{{stint.laps}}</td>
-            <td>{{stint.fuelUsed | number : '1.0-2' }}</td>
-            <td>{{stint.timeDriven | millisToDuration}}</td>
-            <td>{{stint.timeInPitlane | millisToDuration}}</td>
-            <td>{{stint.refuelTime | millisToDuration}}</td>
-            <td>{{stint.totalStintLength | millisToDuration}}</td>
-            <td>{{stint.stintEndTime}}</td>
-          </tr>
-      </ng-template>
-  </p-table>
-  }
-</div>

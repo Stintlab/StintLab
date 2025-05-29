@@ -1,7 +1,8 @@
+import { PanelModule } from 'primeng/panel';
 import { StintcalculatorService } from './../../services/stintcalculator/stintcalculator.service';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
-import { PanelModule } from 'primeng/panel';
+import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { SelectItem, SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
@@ -17,6 +18,7 @@ import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-stintplanner',
   imports: [
+    CardModule,
     PanelModule,
     TableModule,
     DrivermanagerComponent,
