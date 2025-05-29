@@ -23,6 +23,8 @@
     <p-floatlabel variant="in">
       <p-inputmask
         mask="99:99:99"
+        [autoClear]="false"
+        characterPattern="[0-9]"
         [(ngModel)]="raceDurationInput"
         (ngModelChange)="parseRaceDuration(); submitChange();"
         [class.ng-dirty]="race.raceDurationInMilliseconds == undefined"
@@ -37,10 +39,13 @@
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
       <p-inputnumber id="fuelTankSize"
-        [(ngModel)]="race.fuelTankSize"
+        mode="decimal"
+        [useGrouping]="false"
+        [maxFractionDigits]="3"
+        [(ngModel)]="race.fuelTankSizeInLiters"
         (ngModelChange)="submitChange()"
-        [class.ng-dirty]="race.fuelTankSize == undefined"
-        [class.ng-invalid]="race.fuelTankSize == undefined"
+        [class.ng-dirty]="race.fuelTankSizeInLiters == undefined"
+        [class.ng-invalid]="race.fuelTankSizeInLiters == undefined"
       />
       <label for="fuelTankSize">Fueltank Size in Liters</label>
     </p-floatlabel>
@@ -51,10 +56,13 @@
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
       <p-inputnumber id="refuelRate"
-        [(ngModel)]="race.refuelRate"
+        mode="decimal"
+        [useGrouping]="false"
+        [maxFractionDigits]="3"
+        [(ngModel)]="refuelRateInput"
         (ngModelChange)="submitChange()"
-        [class.ng-dirty]="race.refuelRate == undefined"
-        [class.ng-invalid]="race.refuelRate == undefined"
+        [class.ng-dirty]="race.refuelRateInMillisecondsPerLiterRefueled == undefined"
+        [class.ng-invalid]="race.refuelRateInMillisecondsPerLiterRefueled == undefined"
       />
       <label for="refuelRate">Refuel rate in Liters per Second</label>
     </p-floatlabel>
@@ -65,10 +73,13 @@
     </p-inputgroup-addon>
     <p-floatlabel variant="in">
       <p-inputnumber id="driveThrough"
-        [(ngModel)]="race.driveThrough"
+        mode="decimal"
+        [useGrouping]="false"
+        [maxFractionDigits]="3"
+        [(ngModel)]="drivethroughDurationInput"
         (ngModelChange)="submitChange()"
-        [class.ng-dirty]="race.driveThrough == undefined"
-        [class.ng-invalid]="race.driveThrough == undefined"
+        [class.ng-dirty]="race.driveThroughInMilliseconds == undefined"
+        [class.ng-invalid]="race.driveThroughInMilliseconds == undefined"
       />
       <label for="driveThrough">Time lost during pit excluding service in seconds</label>
     </p-floatlabel>

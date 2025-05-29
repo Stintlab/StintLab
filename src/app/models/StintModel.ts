@@ -3,10 +3,14 @@ export class StintModel {
   counter: number;
   driver: DriverModel | undefined;
   laps: number | undefined;
+  fuelUsed: number | undefined;
+  timeDriven: number | undefined;
+  timeInPitlane: number | undefined;
+  refuelTime: number | undefined;
+  totalStintLength: number | undefined;
+  stintEndTime: Date | undefined;
 
-  constructor(counter: number, driver: DriverModel, laps: number){
+  constructor(counter: number){
     this.counter = counter;
-    this.driver = driver;
-    this.laps = laps;
   }
 }

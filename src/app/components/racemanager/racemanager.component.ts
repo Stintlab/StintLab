@@ -31,6 +31,8 @@ export class RacemanagerComponent implements OnInit {
   @Input() race! : RaceModel;
   @Output() raceChange : EventEmitter<RaceModel> = new EventEmitter();
   raceDurationInput: string = "";
+  drivethroughDurationInput: number | undefined = undefined;
+  refuelRateInput: number | undefined = undefined;
 
   constructor() { }
 
@@ -54,6 +56,12 @@ export class RacemanagerComponent implements OnInit {
   }
 
   submitChange(){
+    if(this.refuelRateInput != undefined){
+      this.race.refuelRateInMillisecondsPerLiterRefueled = 1000.0 / this.refuelRateInput!;
+    }
+    if(this.drivethroughDurationInput != undefined){
+      this.race.driveThroughInMilliseconds = 1000.0 * this.drivethroughDurationInput!;
+    }
     this.raceChange.next(this.race);
   }
 

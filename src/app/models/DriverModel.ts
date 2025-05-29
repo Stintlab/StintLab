@@ -1,7 +1,7 @@
 export class DriverModel {
   name: string;
-  fuelConsumption: number | undefined = 10;
-  laptimeInMilliseconds: number | undefined = 60000;
+  fuelConsumption: number | undefined;
+  laptimeInMilliseconds: number | undefined;
 
   constructor(name: string){
     this.name = name;

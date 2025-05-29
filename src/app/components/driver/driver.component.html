@@ -19,6 +19,9 @@
       </p-inputgroup-addon>
     <p-floatlabel variant="in">
       <p-inputnumber id="driverFuelConsumption"
+        mode="decimal"
+        [useGrouping]="false"
+        [maxFractionDigits]="3"
         [(ngModel)]="driver.fuelConsumption"
         (ngModelChange)="submitChange()"
         [class.ng-dirty]="driver.fuelConsumption == undefined"
