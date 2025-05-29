@@ -14,37 +14,38 @@
     </p-panel>
   </div>
 </div>
-@for (stint of stints; track $index) {
-  <p>
-    Stint #: {{stint.counter}} - driven by {{stint.driver?.name}} for {{stint.laps}} laps
-  </p>
-}
-
 <!-- stint table -->
-<!-- <div>
-<p-table [value]="stints" dataKey="counter" [tableStyle]="{ 'min-width': '50rem' }">
-    <ng-template #header>
-        <tr>
-            <th style="width:25%">
-                Name
-            </th>
-        </tr>
-    </ng-template>
-    <ng-template #body let-stint let-editing="editing">
-        <tr>
-            <td [pEditableColumn]="stint.driver.name" pEditableColumnField="code">
-                <p-cellEditor>
-                    <ng-template #input>
-                        <input
-                            pInputText
-                            type="text" />
-                    </ng-template>
-                    <ng-template #output>
-                        {{ stint.driver.name }}
-                    </ng-template>
-                </p-cellEditor>
-            </td>
-        </tr>
-    </ng-template>
-</p-table>
-</div> -->
+<div>
+  @if (showTable) {
+  <p-table [value]="racePlan!.stints!" [tableStyle]="{ 'min-width': '50rem' }">
+      <ng-template #header>
+          <tr>
+              <th>Stint #</th>
+              <th>Driver</th>
+              <th>Stint Start Time</th>
+              <th>Laps in Stint</th>
+              <th>Fuel used in Stint</th>
+              <th>Time on Track</th>
+              <th>Time in Pitlane</th>
+              <th>Time for Refueling</th>
+              <th>Total Stint Duration</th>
+              <th>Stint End Time</th>
+          </tr>
+      </ng-template>
+      <ng-template #body let-stint>
+          <tr>
+              <td>{{stint.counter}}</td>
+              <td>{{stint.driver.name}}</td>
+              <td>{{stint.stintStartTime}}</td>
+              <td>{{stint.laps}}</td>
+              <td>{{stint.fuelUsed}}</td>
+              <td>{{stint.timeDriven | millisToDuration}}</td>
+              <td>{{stint.timeInPitlane | millisToDuration}}</td>
+              <td>{{stint.refuelTime | millisToDuration}}</td>
+              <td>{{stint.totalStintLength | millisToDuration}}</td>
+              <td>{{stint.stintEndTime}}</td>
+          </tr>
+      </ng-template>
+  </p-table>
+  }
+</div>

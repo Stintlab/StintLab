@@ -2,6 +2,7 @@ import { DriverModel } from './DriverModel';
 export class StintModel {
   counter: number;
   driver: DriverModel | undefined;
+  stintStartTime: Date | undefined;
   laps: number | undefined;
   fuelUsed: number | undefined;
   timeDriven: number | undefined;

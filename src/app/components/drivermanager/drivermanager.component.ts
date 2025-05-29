@@ -16,7 +16,9 @@ export class DrivermanagerComponent implements OnInit {
   driverTab: number = -1;
 
   ngOnInit(): void {
-    this.addDriver();
+    if(this.drivers.length == 0){
+      this.addDriver();
+    }
   }
 
   addDriver(){

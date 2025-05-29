@@ -8,6 +8,8 @@ import { DrivermanagerComponent } from '../../components/drivermanager/driverman
 import { DriverModel } from '../../models/DriverModel';
 import { RaceModel } from '../../models/RaceModel';
 import { StintModel } from '../../models/StintModel';
+import { RacePlanModel } from '../../models/RacePlanModel';
+import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
 
 @Component({
   selector: 'app-stintplanner',
@@ -15,15 +17,18 @@ import { StintModel } from '../../models/StintModel';
     PanelModule,
     TableModule,
     DrivermanagerComponent,
-    RacemanagerComponent
-  ],
+    RacemanagerComponent,
+    MillisToDurationPipe
+],
   templateUrl: './stintplanner.component.html',
   styleUrl: './stintplanner.component.scss'
 })
 export class StintplannerComponent implements OnInit {
   drivers: DriverModel[] = [];
   race: RaceModel = new RaceModel();
-  stints: StintModel[] = [];
+  racePlan: RacePlanModel | undefined = undefined;
+  showTable: boolean = false;
+  test = ["eins", "zwei"];
 
   constructor(private logger:NGXLogger, private stintcalculatorService:StintcalculatorService){
   }
@@ -33,10 +38,16 @@ export class StintplannerComponent implements OnInit {
 
   calculateStints(){
     if(this.validateInputs(this.drivers, this.race)) {
-      var driverPerStintList: DriverModel[] = this.stints
+      var driverPerStintList: DriverModel[] = [];
+      if(this.racePlan != undefined){
+        driverPerStintList = this.racePlan!.stints
         .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
         .map(d => d.driver!);
-      this.stints = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
+      }
+
+      this.racePlan = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
+    debugger;
+      this.showTable = true;
     }
   }
 

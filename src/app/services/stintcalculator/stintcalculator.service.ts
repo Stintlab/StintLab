@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { StintModel } from '../../models/StintModel';
 import { RaceModel } from '../../models/RaceModel';
 import { NGXLogger } from 'ngx-logger';
+import { RacePlanModel } from '../../models/RacePlanModel';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class StintcalculatorService {
 
 constructor(private logger: NGXLogger) { }
 
-  calculateStints(race: RaceModel, drivers: DriverModel[], defaultDriver: DriverModel) : StintModel[] {
+  calculateStints(race: RaceModel, drivers: DriverModel[], defaultDriver: DriverModel) : RacePlanModel {
     //prepare some calc values
     var stintCounter = 0;
     var stints: StintModel[] = [];
@@ -34,12 +35,13 @@ constructor(private logger: NGXLogger) { }
       var stint = new StintModel(stintCounter);
       stint.driver = driver;
       stint.laps = lapsInFullStint;
+      stint.stintStartTime = stintStartTime;
       stint.fuelUsed = fuelUsed;
       stint.timeInPitlane = timeInPitlane;
       stint.refuelTime = refuelTime;
       stint.timeDriven = stintRaceTime;
       stint.totalStintLength = stintTime;
-      stintEndTime = stintEndTime;
+      stint.stintEndTime = stintEndTime;
       stints.push(stint);
 
       stintCounter++;
@@ -82,14 +84,16 @@ constructor(private logger: NGXLogger) { }
     var stint = new StintModel(stintCounter);
     stint.driver = driver;
     stint.laps = remainingLaps;
+    stint.stintStartTime = stintStartTime;
     stint.fuelUsed = fuelUsed;
     stint.timeInPitlane = timeInPitlane;
     stint.refuelTime = refuelTime;
     stint.timeDriven = stintRaceTime;
     stint.totalStintLength = stintTime;
-    stintEndTime = stintEndTime;
+    stint.stintEndTime = stintEndTime;
     stints.push(stint);
-    return stints;
+    var totalLaps = (stintCounter - 1) * lapsInFullStint + remainingLaps;
+    return new RacePlanModel(totalLaps, stints);
   }
 
 

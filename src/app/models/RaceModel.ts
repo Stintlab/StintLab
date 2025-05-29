@@ -1,5 +1,5 @@
 export class RaceModel {
-  raceStart : Date | undefined = new Date();
+  raceStart : Date | undefined;
   raceDurationInMilliseconds: number | undefined;
   fuelTankSizeInLiters: number | undefined;
   refuelRateInMillisecondsPerLiterRefueled: number | undefined;
