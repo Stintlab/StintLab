@@ -34,16 +34,24 @@
       </ng-template>
       <ng-template #body let-stint>
           <tr>
-              <td>{{stint.counter}}</td>
-              <td>{{stint.driver.name}}</td>
-              <td>{{stint.stintStartTime}}</td>
-              <td>{{stint.laps}}</td>
-              <td>{{stint.fuelUsed}}</td>
-              <td>{{stint.timeDriven | millisToDuration}}</td>
-              <td>{{stint.timeInPitlane | millisToDuration}}</td>
-              <td>{{stint.refuelTime | millisToDuration}}</td>
-              <td>{{stint.totalStintLength | millisToDuration}}</td>
-              <td>{{stint.stintEndTime}}</td>
+            <td>{{stint.counter}}</td>
+            <td>
+              <p-select
+              [options]="drivers"
+              [ngModel]="stint.driver.name"
+              (ngModelChange)="updateDriver($event, stint.counter); calculateStints();"
+              optionLabel="name"
+              placeholder={{stint.driver.name}}
+              class="w-full md:w-56" />
+            </td>
+            <td>{{stint.stintStartTime}}</td>
+            <td>{{stint.laps}}</td>
+            <td>{{stint.fuelUsed | number : '1.0-2' }}</td>
+            <td>{{stint.timeDriven | millisToDuration}}</td>
+            <td>{{stint.timeInPitlane | millisToDuration}}</td>
+            <td>{{stint.refuelTime | millisToDuration}}</td>
+            <td>{{stint.totalStintLength | millisToDuration}}</td>
+            <td>{{stint.stintEndTime}}</td>
           </tr>
       </ng-template>
   </p-table>

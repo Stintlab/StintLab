@@ -1,15 +1,18 @@
 import { StintcalculatorService } from './../../services/stintcalculator/stintcalculator.service';
 import { Component, OnInit } from '@angular/core';
+import { DecimalPipe } from '@angular/common';
 import { PanelModule } from 'primeng/panel';
 import { TableModule } from 'primeng/table';
+import { SelectItem, SelectModule } from 'primeng/select';
+import { TagModule } from 'primeng/tag';
 import { NGXLogger } from "ngx-logger";
 import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
 import { DriverModel } from '../../models/DriverModel';
 import { RaceModel } from '../../models/RaceModel';
-import { StintModel } from '../../models/StintModel';
 import { RacePlanModel } from '../../models/RacePlanModel';
 import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-stintplanner',
@@ -18,7 +21,11 @@ import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDurat
     TableModule,
     DrivermanagerComponent,
     RacemanagerComponent,
-    MillisToDurationPipe
+    MillisToDurationPipe,
+    DecimalPipe,
+    FormsModule,
+    SelectModule,
+    TagModule
 ],
   templateUrl: './stintplanner.component.html',
   styleUrl: './stintplanner.component.scss'
@@ -28,12 +35,17 @@ export class StintplannerComponent implements OnInit {
   race: RaceModel = new RaceModel();
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
-  test = ["eins", "zwei"];
+  selectedDriver: DriverModel | undefined;
 
   constructor(private logger:NGXLogger, private stintcalculatorService:StintcalculatorService){
   }
 
   ngOnInit(): void {
+  }
+
+  updateDriver(driver: DriverModel, stintCounter: number){
+    this.logger.info('changing driver to ' + driver.name + 'for stint ' + stintCounter);
+    this.racePlan!.stints[stintCounter].driver = driver;
   }
 
   calculateStints(){
@@ -46,7 +58,6 @@ export class StintplannerComponent implements OnInit {
       }
 
       this.racePlan = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
-    debugger;
       this.showTable = true;
     }
   }
