@@ -24,8 +24,7 @@ export class DurationUtil {
     t.seconds = remainder % 60;
     remainder = Math.floor(remainder / 60);
     t.minutes = remainder % 60;
-    remainder = Math.floor(remainder / 60);
-    t.hours = remainder % 24;
+    t.hours = Math.floor(remainder / 60);
     return t;
   }
 
@@ -34,7 +33,7 @@ export class DurationUtil {
     var millisplit = duration.split('.');
     var split = millisplit[0].split(':');
     //parse milliseconds if given
-    if(millisplit.length > 0){
+    if(millisplit.length > 1){
       t.milliseconds = Number.parseInt(millisplit[1]);
     }
     else{
