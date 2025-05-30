@@ -99,10 +99,7 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy",
-          "options": {
-            "base-href": "/Stintplanner/"
-          }
+          "builder": "angular-cli-ghpages:deploy"
         }
       }
     }
