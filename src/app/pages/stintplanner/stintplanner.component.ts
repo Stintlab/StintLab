@@ -1,3 +1,4 @@
+import { LocalStorageServiceService } from './../../services/localstorageservice/LocalStorageService.service';
 import { PanelModule } from 'primeng/panel';
 import { StintcalculatorService } from './../../services/stintcalculator/stintcalculator.service';
 import { Component, OnInit } from '@angular/core';
@@ -33,16 +34,50 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './stintplanner.component.scss'
 })
 export class StintplannerComponent implements OnInit {
+  private static readonly RACE_STORAGE: string = "Stintplanner_raceModel";
+  private static readonly DRIVER_STORAGE: string = "Stintplanner_driverModels";
+  private static readonly PLAN_STORAGE: string = "Stintplanner_racePlan";
+
   drivers: DriverModel[] = [];
   race: RaceModel = new RaceModel();
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
   selectedDriver: DriverModel | undefined;
 
-  constructor(private logger:NGXLogger, private stintcalculatorService:StintcalculatorService){
-  }
+  constructor(
+    private logger:NGXLogger,
+    private localStorageServiceService:LocalStorageServiceService,
+    private stintcalculatorService:StintcalculatorService
+  ){}
 
   ngOnInit(): void {
+    var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintplannerComponent.RACE_STORAGE);
+    if(persistedRaceModel != null){
+      this.race = persistedRaceModel;
+    }
+
+    var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintplannerComponent.DRIVER_STORAGE);
+    if(persistedDriverModels != null){
+      this.drivers = persistedDriverModels;
+    }
+
+    var persistedRaceplan = this.localStorageServiceService.get<RacePlanModel>(StintplannerComponent.PLAN_STORAGE);
+    if(persistedRaceplan != null){
+      this.racePlan = persistedRaceplan;
+      this.showTable = true;
+    }
+  }
+
+  persistRace(){
+    this.localStorageServiceService.set<RaceModel>(StintplannerComponent.RACE_STORAGE, this.race);
+  }
+  persistDrivers(){
+    this.localStorageServiceService.set<DriverModel[]>(StintplannerComponent.DRIVER_STORAGE, this.drivers);
+  }
+  persistPlan(){
+    if(this.racePlan != undefined){
+      this.localStorageServiceService.set<RacePlanModel>(StintplannerComponent.PLAN_STORAGE, this.racePlan!);
+    }
   }
 
   updateDriver(driver: DriverModel, stintCounter: number){
@@ -60,6 +95,7 @@ export class StintplannerComponent implements OnInit {
       }
 
       this.racePlan = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
+      this.persistPlan();
       this.showTable = true;
     }
   }

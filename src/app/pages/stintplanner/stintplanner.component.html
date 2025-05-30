@@ -4,7 +4,7 @@
         <p class="m-0">
           <app-racemanager
             [(race)]="race"
-            (raceChange)="calculateStints()"
+            (raceChange)="persistRace(); calculateStints();"
           ></app-racemanager>
         </p>
       </p-panel>
@@ -12,7 +12,7 @@
         <p class="m-0">
           <app-drivermanager
             [(drivers)]="drivers"
-            (driversChange)="calculateStints()"
+            (driversChange)="persistDrivers(); calculateStints();"
           ></app-drivermanager>
         </p>
       </p-panel>
@@ -49,7 +49,8 @@
               [options]="drivers"
               [ngModel]="stint.driver.name"
               (ngModelChange)="
-                updateDriver($event, stint.counter); calculateStints()
+                updateDriver($event, stint.counter);
+                calculateStints();
               "
               optionLabel="name"
               placeholder="{{ stint.driver.name }}"
