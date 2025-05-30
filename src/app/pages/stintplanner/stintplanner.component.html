@@ -18,6 +18,9 @@
       </p-panel>
   </div>
   <div>
+    @if(!validState){
+      <p>invalid input data, processing halted</p>
+    }
     @if (showTable) {
     <p>
       Gesamt Anzahl Runden: {{ racePlan!.totalLapCount }}, Anzahl Stints:
@@ -72,4 +75,3 @@
     }
   </div>
 </div>
-<!-- stint table -->

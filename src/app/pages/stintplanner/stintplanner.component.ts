@@ -42,6 +42,7 @@ export class StintplannerComponent implements OnInit {
   race: RaceModel = new RaceModel();
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
+  validState: boolean = false;
   selectedDriver: DriverModel | undefined;
 
   constructor(
@@ -67,6 +68,7 @@ export class StintplannerComponent implements OnInit {
       this.racePlan = persistedRaceplan;
       this.showTable = true;
     }
+    this.validateInputs();
   }
 
   persistRace(){
@@ -87,7 +89,8 @@ export class StintplannerComponent implements OnInit {
   }
 
   calculateStints(){
-    if(this.validateInputs(this.drivers, this.race)) {
+    this.validateInputs();
+    if(this.validState) {
       var driverPerStintList: DriverModel[] = [];
       if(this.racePlan != undefined){
         driverPerStintList = this.racePlan!.stints
@@ -101,43 +104,60 @@ export class StintplannerComponent implements OnInit {
     }
   }
 
-  private validateInputs(drivers: DriverModel[], race: RaceModel) : boolean {
-    if(drivers.length == 0){
+  validateInputs() {
+    if(this.drivers.length == 0){
       this.logger.info("no drivers found");
-      return false;
+      this.validState = false;
+      return;
     }
-    for(let driver of drivers){
+    for(let driver of this.drivers){
       if(!driver.name){
         this.logger.info("driver name invalid");
-        return false;
+      this.validState = false;
+      return;
       }
-      if(driver.fuelConsumption == undefined || driver.fuelConsumption < 0){
+      if(!this.validNumber(driver.fuelConsumption)){
         this.logger.info("driver fuelConsumption invalid");
-        return false;
+      this.validState = false;
+      return;
       }
-      if(driver.laptimeInMilliseconds == undefined || driver.laptimeInMilliseconds < 0){
+      if(!this.validNumber(driver.laptimeInMilliseconds)){
         this.logger.info("driver laptimeInMilliseconds invalid");
-        return false;
+      this.validState = false;
+      return;
       }
     }
 
-    if(!race.raceStart){
+    if(!this.race.raceStart){
       this.logger.info("race start invalid");
-      return false;
+      this.validState = false;
+      return;
     }
-    if(race.raceDurationInMilliseconds == undefined || race.raceDurationInMilliseconds < 0){
+    if(!this.validNumber(this.race.raceDurationInMilliseconds)){
       this.logger.info("race raceDurationInMilliseconds invalid");
-      return false;
+      this.validState = false;
+      return;
     }
-    if(race.fuelTankSizeInLiters == undefined || race.fuelTankSizeInLiters < 0){
+    if(!this.validNumber(this.race.fuelTankSizeInLiters)){
       this.logger.info("race fuelTankSize invalid");
-      return false;
+      this.validState = false;
+      return;
     }
-    if(race.driveThroughInMilliseconds == undefined || race.driveThroughInMilliseconds < 0){
+    if(!this.validNumber(this.race.refuelRateInMillisecondsPerLiterRefueled)){
+      this.logger.info("race refuelRate invalid");
+      this.validState = false;
+      return;
+    }
+    if(!this.validNumber(this.race.driveThroughInMilliseconds)){
       this.logger.info("race driveThrough invalid");
-      return false;
+      this.validState = false;
+      return;
     }
-    return true;
+    this.validState = true;
+  }
+
+  private validNumber(input: number | undefined){
+    return input != undefined && Number.isFinite(input) && input > 0;
   }
 
 }

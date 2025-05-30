@@ -8,6 +8,8 @@
         id="raceStart"
         [showTime]="true"
         hourFormat="24"
+        dateFormat="dd.mm.yy"
+        [showSeconds]="true"
         [(ngModel)]="race.raceStart"
         (ngModelChange)="submitChange()"
         [class.ng-dirty]="race.raceStart == undefined"

@@ -9,8 +9,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { RaceModel } from '../../models/RaceModel';
-import { MillisToDurationPipe } from '../../pipes/millisToDuration/millisToDuration.pipe';0
-
+import { DurationUtil } from '../../util/DurationUtil';
 
 @Component({
   selector: 'app-racemanager',
@@ -39,40 +38,33 @@ export class RacemanagerComponent implements OnInit {
   getRaceDuration(){
     var raceDuration = this.race.raceDurationInMilliseconds;
     if(raceDuration == undefined) {
-      return '';
+      return null;
     }
     else {
-      var remainder = Math.floor(raceDuration / 1000);
-      var seconds = remainder % 60;
-      remainder = Math.floor(remainder / 60);
-      var minutes = remainder % 60;
-      remainder = Math.floor(remainder / 60);
-      var hours = remainder % 24;
-      remainder = Math.floor(remainder / 24);
-
-      return MillisToDurationPipe.formatNumber(hours, 2)
-      + ":" + MillisToDurationPipe.formatNumber(minutes, 2)
-      + ":" + MillisToDurationPipe.formatNumber(seconds, 2);
+      var d = DurationUtil.fromMilliseconds(raceDuration);
+      return DurationUtil.formatNumber(d.hours, 2)
+      + ":" + DurationUtil.formatNumber(d.minutes, 2)
+      + ":" + DurationUtil.formatNumber(d.seconds, 2);
     }
   }
 
   getRefuelRate(){
     var refuelRate = this.race.refuelRateInMillisecondsPerLiterRefueled;
     if(refuelRate == undefined) {
-      return '';
+      return null;
     }
     else {
-      return '' + (1000 / refuelRate);
+      return (1000 / refuelRate);
     }
   }
 
     getDrivethrough(){
     var drivethrough = this.race.driveThroughInMilliseconds;
     if(drivethrough == undefined) {
-      return '';
+      return null;
     }
     else {
-      return '' + (drivethrough / 1000);
+      return (drivethrough / 1000);
     }
   }
 
@@ -81,28 +73,30 @@ export class RacemanagerComponent implements OnInit {
       this.race.raceDurationInMilliseconds = undefined;
       return;
     }
-    var split = raceDurationInput.split(':');
-    var hours = Number.parseInt(split[0]);
-    var minutes = Number.parseInt(split[1]);
-    var seconds = Number.parseInt(split[2]);
-    if(Number.isNaN(hours) || Number.isNaN(minutes) || Number.isNaN(seconds)){
+    var d = DurationUtil.fromDurationString(raceDurationInput);
+    if(!d.isValid()){
       return;
     }
-    var totalMillis = (((hours * 60) + minutes) * 60 + seconds) * 1000;
-    this.race.raceDurationInMilliseconds = totalMillis;
+    this.race.raceDurationInMilliseconds = d.toTotalMillis();
     this.submitChange();
   }
 
   setRefuelRate(refuelRateInput: number | undefined){
-    if(refuelRateInput != undefined){
+    if(refuelRateInput != null){
       this.race.refuelRateInMillisecondsPerLiterRefueled = 1000.0 / refuelRateInput!;
+    }
+    else{
+      this.race.refuelRateInMillisecondsPerLiterRefueled = undefined;
     }
     this.submitChange();
   }
 
   setDrivethrough(drivethroughDurationInput: number | undefined){
-    if(drivethroughDurationInput != undefined){
+    if(drivethroughDurationInput != null){
       this.race.driveThroughInMilliseconds = 1000.0 * drivethroughDurationInput!;
+    }
+    else{
+      this.race.driveThroughInMilliseconds = undefined;
     }
     this.submitChange();
   }
