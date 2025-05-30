@@ -25,8 +25,8 @@
         mask="99:99:99"
         [autoClear]="false"
         characterPattern="[0-9]"
-        [(ngModel)]="raceDurationInput"
-        (ngModelChange)="parseRaceDuration(); submitChange();"
+        [ngModel]="getRaceDuration()"
+        (ngModelChange)="setRaceDuration($event);"
         [class.ng-dirty]="race.raceDurationInMilliseconds == undefined"
         [class.ng-invalid]="race.raceDurationInMilliseconds == undefined"
       />
@@ -59,8 +59,8 @@
         mode="decimal"
         [useGrouping]="false"
         [maxFractionDigits]="3"
-        [(ngModel)]="refuelRateInput"
-        (ngModelChange)="submitChange()"
+        [ngModel]="getRefuelRate()"
+        (ngModelChange)="setRefuelRate($event);"
         [class.ng-dirty]="race.refuelRateInMillisecondsPerLiterRefueled == undefined"
         [class.ng-invalid]="race.refuelRateInMillisecondsPerLiterRefueled == undefined"
       />
@@ -76,8 +76,8 @@
         mode="decimal"
         [useGrouping]="false"
         [maxFractionDigits]="3"
-        [(ngModel)]="drivethroughDurationInput"
-        (ngModelChange)="submitChange()"
+        [ngModel]="getDrivethrough()"
+        (ngModelChange)="setDrivethrough($event)"
         [class.ng-dirty]="race.driveThroughInMilliseconds == undefined"
         [class.ng-invalid]="race.driveThroughInMilliseconds == undefined"
       />

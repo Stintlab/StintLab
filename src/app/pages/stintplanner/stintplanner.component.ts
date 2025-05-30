@@ -54,6 +54,7 @@ export class StintplannerComponent implements OnInit {
     var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintplannerComponent.RACE_STORAGE);
     if(persistedRaceModel != null){
       this.race = persistedRaceModel;
+      this.race.raceStart = new Date(this.race.raceStart!);
     }
 
     var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintplannerComponent.DRIVER_STORAGE);

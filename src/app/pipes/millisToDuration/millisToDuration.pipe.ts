@@ -15,10 +15,13 @@ export class MillisToDurationPipe implements PipeTransform {
     var hours = remainder % 24;
     remainder = Math.floor(remainder / 24);
 
-    return this.formatNumber(hours, 2) + ":" + this.formatNumber(minutes, 2) + ":" + this.formatNumber(seconds, 2) + "." + this.formatNumber(millis, 3);
+    return MillisToDurationPipe.formatNumber(hours, 2)
+    + ":" + MillisToDurationPipe.formatNumber(minutes, 2)
+    + ":" + MillisToDurationPipe.formatNumber(seconds, 2)
+    + "." + MillisToDurationPipe.formatNumber(millis, 3);
   }
 
-  formatNumber(value: number, leadingZeros: number) : string {
+  static formatNumber(value: number, leadingZeros: number) : string {
     return ('' + value).padStart(leadingZeros, '0');
   }
 }
