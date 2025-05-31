@@ -1,4 +1,4 @@
-[![][license-shield]]([license-md])
+[![][license-shield]](https://github.com/MathiasSonderfeld/Stintplanner/blob/main/license.md)
 [![][ci-cd-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
 [![][angular-version-shield]](https://angular.dev/)
 [![][primeng-version-shield]](https://primeng.org/)
@@ -7,7 +7,7 @@
 
 **Stintplanner is your tool to manage your motorsport team event.**  
 Plan stints, determine fuel requirements and communicate driver timings from start to finish to come out ahead.
-Its licensed under the AGPLv3, more for info see [license.md]([license-md]).
+Its licensed under the AGPLv3, more for info see [license.md](https://github.com/MathiasSonderfeld/Stintplanner/blob/main/license.md).
 
 ## How to use it
 Easy.
@@ -79,7 +79,6 @@ For more information on using the Angular CLI, including detailed command refere
 
 
 <!-- Vars -->
-[license-md]: https://github.com/MathiasSonderfeld/Stintplanner/license.md
 [license-shield]: https://img.shields.io/badge/License-AGPLv3-red
 [ci-cd-shield]:https://img.shields.io/github/actions/workflow/status/MathiasSonderfeld/Stintplanner/build-and-deploy-main.yml?branch=main&logo=githubactions&label=CI%2FCD
 [angular-version-shield]: https://img.shields.io/github/package-json/dependency-version/MathiasSonderfeld/Stintplanner/%40angular%2Fcore?logo=angular&label=Angular%20Version
