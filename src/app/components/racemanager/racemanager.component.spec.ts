@@ -1,20 +1,27 @@
-import { waitForAsync, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RacemanagerComponent } from './racemanager.component';
+import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
+import { importProvidersFrom } from '@angular/core';
+import { RaceModel } from '../../models/RaceModel';
 
 describe('RacemanagerComponent', () => {
   let component: RacemanagerComponent;
   let fixture: ComponentFixture<RacemanagerComponent>;
 
-  beforeEach(waitForAsync(() => {
-    TestBed.configureTestingModule({
-      declarations: [ RacemanagerComponent ]
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [RacemanagerComponent],
+      providers: [
+        importProvidersFrom(LoggerModule.forRoot({
+          level: NgxLoggerLevel.ERROR
+        }))
+      ]
     })
     .compileComponents();
-  }));
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(RacemanagerComponent);
     component = fixture.componentInstance;
+    component.race = new RaceModel();
     fixture.detectChanges();
   });
 
