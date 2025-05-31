@@ -8,21 +8,33 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [24.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
-
     steps:
-    - uses: actions/checkout@v4
+    - name: Clone Repository
+      uses: actions/checkout@v4
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - run: npm run build:prod --if-present
-    - run: npm run test:ci
-    - run: npm run deploy:ghp
+    - name: install node packages
+      run: npm ci
+
+    - name: Build with production configuration
+      run: npm run build:prod --if-present
+
+    - name: Unit tests
+      run: npm run test:ci
+
+    - name: Deploy to Github Pages
+      uses: JamesIves/github-pages-deploy-action@v4.7.3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist/stintplanner
