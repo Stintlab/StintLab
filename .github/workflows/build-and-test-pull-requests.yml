@@ -8,7 +8,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  build-and-test-pull-requests:
     runs-on: ubuntu-latest
     strategy:
       matrix:
