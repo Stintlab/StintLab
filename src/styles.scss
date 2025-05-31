@@ -1,7 +1,43 @@
 /* You can add global styles to this file, and also import other style files */
 @import "primeicons/primeicons.css";
 
+//Light Mode Color Pallete - https://colorhunt.co/palette/f3f3e027548a183b4edda853
+$bgColor_light: rgb(243, 243, 224);
+$textColor_light: rgb(39, 84, 138);
+$borderColor_light: rgb(24, 59, 78);
+$alternativeBgColor_light: rgb(221, 168, 83);
+
+//Dark Mode Color Pallete - https://colorhunt.co/palette/0e2148483aa07965c1e3d095
+$bgColor_dark: rgb(14, 33, 72);
+$textColor_dark: rgb(227, 208, 149);
+$borderColor_dark: rgb(121, 101, 193);
+$alternativeBgColor_dark: rgb(72, 58, 160);
+
+:root{
+  --bgColor: #{$bgColor_light};
+  --textColor: #{$textColor_light};
+  --borderColor: #{$borderColor_light};
+  --alternativeBgColor: #{$alternativeBgColor_light};
+}
+
+// mixin that enables css variables in light mode
+@mixin lighten() {
+  --bgColor: #{$bgColor_light};
+  --textColor: #{$textColor_light};
+  --borderColor: #{$borderColor_light};
+  --alternativeBgColor: #{$alternativeBgColor_light};
+}
+
+// mixin that enables css variables in dark mode
+@mixin darken() {
+  --bgColor: #{$bgColor_dark};
+  --textColor: #{$textColor_dark};
+  --borderColor: #{$borderColor_dark};
+  --alternativeBgColor: #{$alternativeBgColor_dark};
+}
+
 * {
   margin: 0px;
   padding: 0px;
 }
+
