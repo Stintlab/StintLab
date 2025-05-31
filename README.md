@@ -1,8 +1,27 @@
+[![][license-shield]]([license-md])
+[![][ci-cd-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
+[![][angular-version-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
+[![][primeng-version-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
+
 # Stintplanner
+
+Stintplanner is **your tool to manage your motorsport team event**.
+Plan stints, determine fuel requirements and communicate driver timings from start to finish to come out ahead.
+Its licensed under the AGPLv3, more for info see [license.md]([license-md]).
+
+## How to use it
+Easy.
+#### Step 1: Open the website
+[Stintplanner](https://mathiassonderfeld.github.io/Stintplanner/)
+
+#### there is no Step 2
+
+
+## For Contributors
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.13.
 
-## Development server
+### Development server
 
 To start a local development server, run:
 
@@ -12,7 +31,7 @@ ng serve
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+### Code scaffolding
 
 Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
@@ -26,7 +45,7 @@ For a complete list of available schematics (such as `components`, `directives`,
 ng generate --help
 ```
 
-## Building
+### Building
 
 To build the project run:
 
@@ -36,7 +55,7 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-## Running unit tests
+### Running unit tests
 
 To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
 
@@ -44,7 +63,7 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ng test
 ```
 
-## Running end-to-end tests
+### Running end-to-end tests
 
 For end-to-end (e2e) testing, run:
 
@@ -54,6 +73,14 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-## Additional Resources
+### Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+
+<!-- Vars -->
+[license-md]: https://github.com/MathiasSonderfeld/Stintplanner/license.md
+[license-shield]: https://img.shields.io/badge/License-AGPLv3-red
+[ci-cd-shield]:https://img.shields.io/github/actions/workflow/status/MathiasSonderfeld/Stintplanner/build-and-deploy-main.yml?branch=main&logo=githubactions&label=CI%2FCD
+[angular-version-shield]: https://img.shields.io/github/package-json/dependency-version/MathiasSonderfeld/Stintplanner/%40angular%2Fcore?logo=angular&label=Angular%20Version
+[primeng-version-shield]:https://img.shields.io/github/package-json/dependency-version/MathiasSonderfeld/Stintplanner/primeng?logo=primeng&label=PrimeNG%20Version
