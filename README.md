@@ -1,7 +1,7 @@
 [![][license-shield]]([license-md])
 [![][ci-cd-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
-[![][angular-version-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
-[![][primeng-version-shield]](https://github.com/MathiasSonderfeld/Stintplanner/actions/workflows/build-and-deploy-main.yml)
+[![][angular-version-shield]](https://angular.dev/)
+[![][primeng-version-shield]](https://primeng.org/)
 
 # Stintplanner
 
