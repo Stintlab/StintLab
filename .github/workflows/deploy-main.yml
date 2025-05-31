@@ -6,15 +6,13 @@ name: Node.js CI
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18.x, 20.x, 22.x, 24.x]
+        node-version: [24.x]
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
@@ -27,4 +25,4 @@ jobs:
     - run: npm ci
     - run: npm run build:prod --if-present
     - run: npm run test:ci
-    - run: npm run deploy:ghb
+    - run: npm run deploy:ghp
