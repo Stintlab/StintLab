@@ -5,7 +5,7 @@
 
 # Stintplanner
 
-Stintplanner is **your tool to manage your motorsport team event**.
+**Stintplanner is your tool to manage your motorsport team event.**  
 Plan stints, determine fuel requirements and communicate driver timings from start to finish to come out ahead.
 Its licensed under the AGPLv3, more for info see [license.md]([license-md]).
 
