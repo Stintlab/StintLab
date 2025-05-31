@@ -1,34 +1,37 @@
-import { LocalStorageServiceService } from './../../services/localstorageservice/LocalStorageService.service';
-import { PanelModule } from 'primeng/panel';
-import { StintcalculatorService } from './../../services/stintcalculator/stintcalculator.service';
 import { Component, OnInit } from '@angular/core';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, DatePipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { NGXLogger } from "ngx-logger";
+import { PanelModule } from 'primeng/panel';
 import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
-import { SelectItem, SelectModule } from 'primeng/select';
+import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
-import { NGXLogger } from "ngx-logger";
+import { LocalStorageServiceService } from './../../services/localstorageservice/LocalStorageService.service';
+import { StintcalculatorService } from './../../services/stintcalculator/stintcalculator.service';
 import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
+import { StatsComponent } from "../../components/stats/stats.component";
+import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
 import { DriverModel } from '../../models/DriverModel';
 import { RaceModel } from '../../models/RaceModel';
 import { RacePlanModel } from '../../models/RacePlanModel';
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-stintplanner',
   imports: [
+    DecimalPipe,
+    DatePipe,
+    MillisToDurationPipe,
+    FormsModule,
+    TagModule,
     CardModule,
     PanelModule,
     TableModule,
+    SelectModule,
     DrivermanagerComponent,
     RacemanagerComponent,
-    MillisToDurationPipe,
-    DecimalPipe,
-    FormsModule,
-    SelectModule,
-    TagModule
+    StatsComponent
 ],
   templateUrl: './stintplanner.component.html',
   styleUrl: './stintplanner.component.scss'
