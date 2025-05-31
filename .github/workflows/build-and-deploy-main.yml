@@ -10,6 +10,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     strategy:
       matrix:
         node-version: [24.x]
@@ -17,7 +19,6 @@ jobs:
     steps:
     - name: Clone Repository
       uses: actions/checkout@v4
-
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
       with:
@@ -25,13 +26,10 @@ jobs:
         cache: 'npm'
     - name: install node packages
       run: npm ci
-
     - name: Build with production configuration
       run: npm run build:prod --if-present
-
     - name: Unit tests
       run: npm run test:ci
-
     - name: Deploy to Github Pages
       uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
