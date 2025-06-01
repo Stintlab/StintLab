@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
-import { StintplannerComponent } from './pages/stintplanner/stintplanner.component';
+import { StintLabComponent } from './pages/stintlab/stintlab.component';
 
 export const routes: Routes = [
   {
     path: '',
-    component: StintplannerComponent
+    component: StintLabComponent
   }
 ];

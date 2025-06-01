@@ -7,8 +7,8 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
-import { LocalStorageServiceService } from './../../services/localstorageservice/LocalStorageService.service';
-import { StintcalculatorService } from './../../services/stintcalculator/stintcalculator.service';
+import { LocalStorageServiceService } from '../../services/localstorageservice/LocalStorageService.service';
+import { StintcalculatorService } from '../../services/stintcalculator/stintcalculator.service';
 import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
 import { StatsComponent } from "../../components/stats/stats.component";
@@ -18,7 +18,7 @@ import { RaceModel } from '../../models/RaceModel';
 import { RacePlanModel } from '../../models/RacePlanModel';
 
 @Component({
-  selector: 'app-stintplanner',
+  selector: 'app-stintlab',
   imports: [
     DecimalPipe,
     DatePipe,
@@ -33,13 +33,13 @@ import { RacePlanModel } from '../../models/RacePlanModel';
     RacemanagerComponent,
     StatsComponent
 ],
-  templateUrl: './stintplanner.component.html',
-  styleUrl: './stintplanner.component.scss'
+  templateUrl: './stintlab.component.html',
+  styleUrl: './stintlab.component.scss'
 })
-export class StintplannerComponent implements OnInit {
-  private static readonly RACE_STORAGE: string = "Stintplanner_raceModel";
-  private static readonly DRIVER_STORAGE: string = "Stintplanner_driverModels";
-  private static readonly PLAN_STORAGE: string = "Stintplanner_racePlan";
+export class StintLabComponent implements OnInit {
+  private static readonly RACE_STORAGE: string = "StintLab_raceModel";
+  private static readonly DRIVER_STORAGE: string = "StintLab_driverModels";
+  private static readonly PLAN_STORAGE: string = "StintLab_racePlan";
 
   drivers: DriverModel[] = [];
   race: RaceModel = new RaceModel();
@@ -55,18 +55,18 @@ export class StintplannerComponent implements OnInit {
   ){}
 
   ngOnInit(): void {
-    var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintplannerComponent.RACE_STORAGE);
+    var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintLabComponent.RACE_STORAGE);
     if(persistedRaceModel != null){
       this.race = persistedRaceModel;
       this.race.raceStart = new Date(this.race.raceStart!);
     }
 
-    var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintplannerComponent.DRIVER_STORAGE);
+    var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintLabComponent.DRIVER_STORAGE);
     if(persistedDriverModels != null){
       this.drivers = persistedDriverModels;
     }
 
-    var persistedRaceplan = this.localStorageServiceService.get<RacePlanModel>(StintplannerComponent.PLAN_STORAGE);
+    var persistedRaceplan = this.localStorageServiceService.get<RacePlanModel>(StintLabComponent.PLAN_STORAGE);
     if(persistedRaceplan != null){
       this.racePlan = persistedRaceplan;
       this.showTable = true;
@@ -75,14 +75,14 @@ export class StintplannerComponent implements OnInit {
   }
 
   persistRace(){
-    this.localStorageServiceService.set<RaceModel>(StintplannerComponent.RACE_STORAGE, this.race);
+    this.localStorageServiceService.set<RaceModel>(StintLabComponent.RACE_STORAGE, this.race);
   }
   persistDrivers(){
-    this.localStorageServiceService.set<DriverModel[]>(StintplannerComponent.DRIVER_STORAGE, this.drivers);
+    this.localStorageServiceService.set<DriverModel[]>(StintLabComponent.DRIVER_STORAGE, this.drivers);
   }
   persistPlan(){
     if(this.racePlan != undefined){
-      this.localStorageServiceService.set<RacePlanModel>(StintplannerComponent.PLAN_STORAGE, this.racePlan!);
+      this.localStorageServiceService.set<RacePlanModel>(StintLabComponent.PLAN_STORAGE, this.racePlan!);
     }
   }
 

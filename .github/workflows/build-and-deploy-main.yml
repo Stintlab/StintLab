@@ -34,4 +34,4 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@v4.7.3
       with:
         branch: gh-pages
-        folder: dist/stintplanner/browser
+        folder: dist/stintlab/browser

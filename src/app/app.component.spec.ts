@@ -20,7 +20,7 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it(`should have the 'Stintplanner' title`, () => {
-    expect(component.title).toEqual('Stintplanner');
+  it(`should have the 'StintLab' title`, () => {
+    expect(component.title).toEqual('StintLab');
   });
 });
