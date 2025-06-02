@@ -32,16 +32,19 @@ constructor(private logger: NGXLogger) { }
 
     //check if the last calculated full stint ends before the race does, if so, add it to the plan and calculate another one
     while(raceEndTime > stintEndTime){
-      var stint = new StintModel(stintCounter);
-      stint.driver = driver;
-      stint.laps = lapsInFullStint;
-      stint.stintStartTime = stintStartTime;
-      stint.fuelUsed = fuelUsed;
-      stint.timeInPitlane = timeInPitlane;
-      stint.refuelTime = refuelTime;
-      stint.timeDriven = stintRaceTime;
-      stint.totalStintLength = stintTime;
-      stint.stintEndTime = stintEndTime;
+      var stint: StintModel = {
+        counter: stintCounter,
+        driver: driver,
+        laps: lapsInFullStint,
+        stintStartTime: stintStartTime,
+        stintEndTime: stintEndTime,
+        fuelUsed: fuelUsed,
+        timeInPitlane: timeInPitlane,
+        refuelTime: refuelTime,
+        timeDriven: stintRaceTime,
+        totalStintLength: stintTime,
+      };
+      
       stints.push(stint);
 
       stintCounter++;
@@ -81,16 +84,18 @@ constructor(private logger: NGXLogger) { }
     }
     while(raceEndTime > stintEndTime);
 
-    var stint = new StintModel(stintCounter);
-    stint.driver = driver;
-    stint.laps = remainingLaps;
-    stint.stintStartTime = stintStartTime;
-    stint.fuelUsed = fuelUsed;
-    stint.timeInPitlane = timeInPitlane;
-    stint.refuelTime = refuelTime;
-    stint.timeDriven = stintRaceTime;
-    stint.totalStintLength = stintTime;
-    stint.stintEndTime = stintEndTime;
+    var stint : StintModel = {
+      counter: stintCounter,
+      driver: driver,
+      laps: lapsInFullStint,
+      stintStartTime: stintStartTime,
+      stintEndTime: stintEndTime,
+      fuelUsed: fuelUsed,
+      timeInPitlane: timeInPitlane,
+      refuelTime: refuelTime,
+      timeDriven: stintRaceTime,
+      totalStintLength: stintTime,
+    };
     stints.push(stint);
     var totalLaps = (stintCounter - 1) * lapsInFullStint + remainingLaps;
     return new RacePlanModel(totalLaps, stints);

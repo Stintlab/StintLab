@@ -26,7 +26,7 @@ export class DrivermanagerComponent implements OnInit {
 
   addDriver(){
     this.driverTab = this.drivers.length;
-    this.drivers.push(new DriverModel("Driver " + (this.drivers.length + 1)));
+    this.drivers.push({name: "Driver " + (this.drivers.length + 1), fuelConsumption: undefined, laptimeInMilliseconds: undefined});
     this.submitChange();
   }
 

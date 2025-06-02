@@ -1,3 +1,4 @@
+import { createEmptyRaceModel, RaceModel } from './../../models/race-model';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,7 +15,6 @@ import { DrivermanagerComponent } from '../../components/drivermanager/driverman
 import { StatsComponent } from "../../components/stats/stats.component";
 import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
 import { DriverModel } from '../../models/driver-model';
-import { RaceModel } from '../../models/race-model';
 import { RacePlanModel } from '../../models/race-plan-model';
 
 @Component({
@@ -42,7 +42,7 @@ export class StintLabComponent implements OnInit {
   private static readonly PLAN_STORAGE: string = "StintLab_racePlan";
 
   drivers: DriverModel[] = [];
-  race: RaceModel = new RaceModel();
+  race: RaceModel = createEmptyRaceModel();
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
   validState: boolean = false;

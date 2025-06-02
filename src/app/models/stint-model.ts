@@ -1,5 +1,5 @@
 import { DriverModel } from './driver-model';
-export class StintModel {
+export interface StintModel {
   counter: number;
   driver: DriverModel | undefined;
   stintStartTime: Date | undefined;
@@ -10,8 +10,4 @@ export class StintModel {
   refuelTime: number | undefined;
   totalStintLength: number | undefined;
   stintEndTime: Date | undefined;
-
-  constructor(counter: number){
-    this.counter = counter;
-  }
 }
