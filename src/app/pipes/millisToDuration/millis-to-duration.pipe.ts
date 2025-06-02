@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { DurationUtil } from '../../util/DurationUtil';
+import { DurationUtil } from '../../util/duration-util';
 
 @Pipe({
   name: 'millisToDuration'

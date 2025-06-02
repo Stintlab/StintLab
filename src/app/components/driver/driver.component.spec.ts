@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DriverComponent } from './driver.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { importProvidersFrom } from '@angular/core';
-import { DriverModel } from '../../models/DriverModel';
+import { DriverModel } from '../../models/driver-model';
 
 describe('DriverComponent', () => {
   let component: DriverComponent;

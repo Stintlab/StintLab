@@ -1,9 +1,9 @@
-import { DriverModel } from './../../models/DriverModel';
+import { DriverModel } from '../../models/driver-model';
 import { Injectable } from '@angular/core';
-import { StintModel } from '../../models/StintModel';
-import { RaceModel } from '../../models/RaceModel';
+import { StintModel } from '../../models/stint-model';
+import { RaceModel } from '../../models/race-model';
 import { NGXLogger } from 'ngx-logger';
-import { RacePlanModel } from '../../models/RacePlanModel';
+import { RacePlanModel } from '../../models/race-plan-model';
 
 @Injectable({
   providedIn: 'root'

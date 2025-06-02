@@ -4,7 +4,7 @@ import { NGXLogger } from 'ngx-logger';
 @Injectable({
   providedIn: 'root'
 })
-export class LocalStorageServiceService {
+export class LocalStorageService {
 
 constructor(private logger: NGXLogger) { }
   get<T>(key: string): T | null {

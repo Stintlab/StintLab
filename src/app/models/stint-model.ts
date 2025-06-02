@@ -1,4 +1,4 @@
-import { DriverModel } from './DriverModel';
+import { DriverModel } from './driver-model';
 export class StintModel {
   counter: number;
   driver: DriverModel | undefined;

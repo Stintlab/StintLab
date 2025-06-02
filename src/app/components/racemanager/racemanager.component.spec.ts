@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RacemanagerComponent } from './racemanager.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { importProvidersFrom } from '@angular/core';
-import { RaceModel } from '../../models/RaceModel';
+import { RaceModel } from '../../models/race-model';
 
 describe('RacemanagerComponent', () => {
   let component: RacemanagerComponent;

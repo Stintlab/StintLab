@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { StatsComponent } from './stats.component';
 import { provideAnimations } from '@angular/platform-browser/animations';
-import { RacePlanModel } from '../../models/RacePlanModel';
-import { StintModel } from '../../models/StintModel';
-import { DriverModel } from '../../models/DriverModel';
+import { RacePlanModel } from '../../models/race-plan-model';
+import { StintModel } from '../../models/stint-model';
+import { DriverModel } from '../../models/driver-model';
 
 describe('StatsComponent', () => {
   let component: StatsComponent;

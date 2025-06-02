@@ -1,5 +1,5 @@
 import { TestBed, inject } from '@angular/core/testing';
-import { LocalStorageServiceService } from './LocalStorageService.service';
+import { LocalStorageService } from './local-storage.service';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { importProvidersFrom } from '@angular/core';
 
@@ -7,7 +7,7 @@ describe('Service: LocalStorageService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
-        LocalStorageServiceService,
+        LocalStorageService,
         importProvidersFrom(LoggerModule.forRoot({
           level: NgxLoggerLevel.ERROR
         }))
@@ -15,7 +15,7 @@ describe('Service: LocalStorageService', () => {
     });
   });
 
-  it('should init', inject([LocalStorageServiceService], (service: LocalStorageServiceService) => {
+  it('should init', inject([LocalStorageService], (service: LocalStorageService) => {
     expect(service).toBeTruthy();
   }));
 });

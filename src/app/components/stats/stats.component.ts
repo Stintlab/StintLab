@@ -2,9 +2,9 @@ import { Component, Input } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
-import { RacePlanModel } from '../../models/RacePlanModel';
-import { DriverModel } from '../../models/DriverModel';
+import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
+import { RacePlanModel } from '../../models/race-plan-model';
+import { DriverModel } from '../../models/driver-model';
 
 @Component({
   selector: 'app-stats',

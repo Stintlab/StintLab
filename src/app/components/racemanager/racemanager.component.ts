@@ -8,8 +8,8 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
-import { RaceModel } from '../../models/RaceModel';
-import { DurationUtil } from '../../util/DurationUtil';
+import { RaceModel } from '../../models/race-model';
+import { DurationUtil } from '../../util/duration-util';
 
 @Component({
   selector: 'app-racemanager',

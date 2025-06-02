@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TabsModule } from 'primeng/tabs';
-import { DriverModel } from '../../models/DriverModel';
+import { DriverModel } from '../../models/driver-model';
 import { DriverComponent } from '../driver/driver.component';
 import { ButtonModule } from 'primeng/button';
 

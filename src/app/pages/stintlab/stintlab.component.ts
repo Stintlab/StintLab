@@ -7,15 +7,15 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
-import { LocalStorageServiceService } from '../../services/localstorageservice/LocalStorageService.service';
+import { LocalStorageService } from '../../services/localstorageservice/local-storage.service';
 import { StintcalculatorService } from '../../services/stintcalculator/stintcalculator.service';
 import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
 import { StatsComponent } from "../../components/stats/stats.component";
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
-import { DriverModel } from '../../models/DriverModel';
-import { RaceModel } from '../../models/RaceModel';
-import { RacePlanModel } from '../../models/RacePlanModel';
+import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
+import { DriverModel } from '../../models/driver-model';
+import { RaceModel } from '../../models/race-model';
+import { RacePlanModel } from '../../models/race-plan-model';
 
 @Component({
   selector: 'app-stintlab',
@@ -50,7 +50,7 @@ export class StintLabComponent implements OnInit {
 
   constructor(
     private logger:NGXLogger,
-    private localStorageServiceService:LocalStorageServiceService,
+    private localStorageServiceService:LocalStorageService,
     private stintcalculatorService:StintcalculatorService
   ){}
 

@@ -1,4 +1,4 @@
-import { StintModel } from "./StintModel";
+import { StintModel } from "./stint-model";
 
 export class RacePlanModel {
   totalLapCount: number;

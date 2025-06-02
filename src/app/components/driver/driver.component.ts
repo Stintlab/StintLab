@@ -6,8 +6,8 @@ import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
-import { DriverModel } from '../../models/DriverModel';
-import { DurationUtil } from '../../util/DurationUtil';
+import { DriverModel } from '../../models/driver-model';
+import { DurationUtil } from '../../util/duration-util';
 
 @Component({
   selector: 'app-driver',
