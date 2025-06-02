@@ -10,6 +10,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { RaceModel } from '../../models/race-model';
 import { DurationUtil } from '../../util/duration-util';
+import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
 
 @Component({
   selector: 'app-racemanager',
@@ -22,8 +23,9 @@ import { DurationUtil } from '../../util/duration-util';
     InputMaskModule,
     InputTextModule,
     DatePickerModule,
-    SelectModule
-  ],
+    SelectModule,
+    MillisToDurationPipe
+],
   templateUrl: './racemanager.component.html',
   styleUrls: ['./racemanager.component.css']
 })
@@ -33,17 +35,6 @@ export class RacemanagerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  getRaceDuration(){
-    var raceDuration = this.race.raceDurationInMilliseconds;
-    if(raceDuration == undefined) {
-      return null;
-    }
-    else {
-      var d = DurationUtil.fromMilliseconds(raceDuration);
-      return d.toString('hours','miliseconds');
-    }
   }
 
   getRefuelRate(){

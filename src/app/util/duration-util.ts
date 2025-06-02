@@ -55,7 +55,7 @@ export class DurationUtil {
     return t;
   }
 
-  toString(from: 'hours' | 'minutes', to: 'seconds' | 'miliseconds'): string {
+  toString(from: 'hours' | 'minutes', to: 'seconds' | 'milliseconds'): string {
     var result = '';
     if(from === 'hours') {
       result += formatNumber(this.hours, 'en-US', '2.0')
@@ -63,7 +63,7 @@ export class DurationUtil {
     
     result += formatNumber(this.minutes, 'en-US', '2.0') + formatNumber(this.seconds, 'en-US', '2.0');
 
-    if(to === 'miliseconds') {
+    if(to === 'milliseconds') {
       result += formatNumber(this.milliseconds, 'en-US', '3.0');
     }
     return result;

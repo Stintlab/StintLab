@@ -27,7 +27,7 @@
         mask="99:99:99"
         [autoClear]="false"
         characterPattern="[0-9]"
-        [ngModel]="getRaceDuration()"
+        [ngModel]="race.raceDurationInMilliseconds | millisToDuration: 'hours' : 'seconds'"
         (ngModelChange)="setRaceDuration($event);"
         [class.ng-dirty]="race.raceDurationInMilliseconds == undefined"
         [class.ng-invalid]="race.raceDurationInMilliseconds == undefined"

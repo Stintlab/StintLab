@@ -37,7 +37,7 @@
     <p-floatlabel variant="in">
       <p-inputmask
         mask="99:99.999"
-        [ngModel]="getLapTime()"
+        [ngModel]="driver.laptimeInMilliseconds | millisToDuration: 'minutes': 'milliseconds'"
         (ngModelChange)="setLapTime($event);"
         [class.ng-dirty]="driver.laptimeInMilliseconds == undefined"
         [class.ng-invalid]="driver.laptimeInMilliseconds == undefined"

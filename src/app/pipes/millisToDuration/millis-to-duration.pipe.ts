@@ -6,8 +6,10 @@ import { DurationUtil } from '../../util/duration-util';
 })
 export class MillisToDurationPipe implements PipeTransform {
 
-  transform(value: number, args?: any): string {
-    var t = DurationUtil.fromMilliseconds(value);
-    return t.toString('hours', 'miliseconds');
+  transform(value: number | undefined, from: 'hours' | 'minutes' = 'hours', to: 'seconds' | 'milliseconds' = 'milliseconds'): string | null {
+    if(value === undefined) {
+      return null;
+    }
+    return DurationUtil.fromMilliseconds(value).toString(from, to);
   }
 }

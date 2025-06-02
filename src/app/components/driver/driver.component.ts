@@ -8,6 +8,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { DriverModel } from '../../models/driver-model';
 import { DurationUtil } from '../../util/duration-util';
+import { MillisToDurationPipe } from '../../pipes/millisToDuration/millis-to-duration.pipe';
 
 @Component({
   selector: 'app-driver',
@@ -18,7 +19,8 @@ import { DurationUtil } from '../../util/duration-util';
     InputGroupAddonModule,
     InputNumberModule,
     InputMaskModule,
-    InputTextModule
+    InputTextModule,
+    MillisToDurationPipe
   ],
   templateUrl: './driver.component.html',
   styleUrl: './driver.component.scss'
@@ -28,14 +30,6 @@ export class DriverComponent implements OnInit {
   @Output() driverChange : EventEmitter<DriverModel> = new EventEmitter();
 
   ngOnInit(): void {
-  }
-
-  getLapTime(){
-    if(this.driver.laptimeInMilliseconds == undefined){
-      return null;
-    }
-    var d = DurationUtil.fromMilliseconds(this.driver.laptimeInMilliseconds);
-    return d.toString('minutes', 'miliseconds');
   }
 
   setLapTime(input: string | null){
