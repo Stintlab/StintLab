@@ -42,9 +42,7 @@ export class RacemanagerComponent implements OnInit {
     }
     else {
       var d = DurationUtil.fromMilliseconds(raceDuration);
-      return DurationUtil.formatNumber(d.hours, 2)
-      + ":" + DurationUtil.formatNumber(d.minutes, 2)
-      + ":" + DurationUtil.formatNumber(d.seconds, 2);
+      return d.toString('hours','miliseconds');
     }
   }
 

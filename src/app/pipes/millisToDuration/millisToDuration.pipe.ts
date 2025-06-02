@@ -8,9 +8,6 @@ export class MillisToDurationPipe implements PipeTransform {
 
   transform(value: number, args?: any): string {
     var t = DurationUtil.fromMilliseconds(value);
-    return DurationUtil.formatNumber(t.hours, 2)
-    + ":" + DurationUtil.formatNumber(t.minutes, 2)
-    + ":" + DurationUtil.formatNumber(t.seconds, 2)
-    + "." + DurationUtil.formatNumber(t.milliseconds, 3);
+    return t.toString('hours', 'miliseconds');
   }
 }

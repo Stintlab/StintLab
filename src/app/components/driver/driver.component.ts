@@ -35,9 +35,7 @@ export class DriverComponent implements OnInit {
       return null;
     }
     var d = DurationUtil.fromMilliseconds(this.driver.laptimeInMilliseconds);
-    return DurationUtil.formatNumber(d.minutes, 2)
-    + ":" + DurationUtil.formatNumber(d.seconds, 2)
-    + "." + DurationUtil.formatNumber(d.milliseconds, 3);
+    return d.toString('minutes', 'miliseconds');
   }
 
   setLapTime(input: string | null){
