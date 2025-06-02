@@ -10,6 +10,7 @@ export class MillisToDurationPipe implements PipeTransform {
     if(value === undefined) {
       return null;
     }
+
     return DurationUtil.fromMilliseconds(value).toString(from, to);
   }
 }

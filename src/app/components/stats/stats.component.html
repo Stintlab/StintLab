@@ -16,7 +16,7 @@
         <td>{{ driverstat.name }}</td>
         <td>{{ driverstat.lapsDriven }}</td>
         <td>{{ driverstat.lapsShare * 100 | number : "2.0-1" }}</td>
-        <td>{{ driverstat.timeDriven | millisToDuration: 'hours' : 'milliseconds' }}</td>
+        <td>{{ driverstat.timeDriven | millisToDuration }}</td>
         <td>{{ driverstat.timeShare * 100 | number : "2.0-1" }}</td>
         <td>{{ driverstat.timeInPitlane | millisToDuration }}</td>
         <td>{{ driverstat.lastStintEnd | date: 'dd.MM.yyyy HH:mm:ss z'}}</td>
