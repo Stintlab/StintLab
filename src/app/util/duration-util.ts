@@ -1,3 +1,5 @@
+import { formatDate, formatNumber } from "@angular/common";
+
 export class DurationUtil {
   hours: number = NaN;
   minutes: number = NaN;
@@ -51,6 +53,20 @@ export class DurationUtil {
       t.seconds = Number.parseInt(split[1]);
     }
     return t;
+  }
+
+  toString(from: 'hours' | 'minutes', to: 'seconds' | 'milliseconds'): string {
+    var result = '';
+    if(from === 'hours') {
+      result += formatNumber(this.hours, 'en-US', '2.0') + ':'
+    }
+    
+    result += formatNumber(this.minutes, 'en-US', '2.0') + ':' + formatNumber(this.seconds, 'en-US', '2.0');
+
+    if(to === 'milliseconds') {
+      result += '.' + formatNumber(this.milliseconds, 'en-US', '3.0');
+    }
+    return result;
   }
 
   static formatNumber(value: number, leadingZeros: number) : string {

@@ -1,3 +1,4 @@
+import { createEmptyRaceModel, RaceModel } from './../../models/race-model';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -7,15 +8,14 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
-import { LocalStorageServiceService } from '../../services/localstorageservice/LocalStorageService.service';
+import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { StintcalculatorService } from '../../services/stintcalculator/stintcalculator.service';
 import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
 import { StatsComponent } from "../../components/stats/stats.component";
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millisToDuration.pipe";
-import { DriverModel } from '../../models/DriverModel';
-import { RaceModel } from '../../models/RaceModel';
-import { RacePlanModel } from '../../models/RacePlanModel';
+import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
+import { DriverModel } from '../../models/driver-model';
+import { RacePlanModel } from '../../models/race-plan-model';
 
 @Component({
   selector: 'app-stintlab',
@@ -42,7 +42,7 @@ export class StintLabComponent implements OnInit {
   private static readonly PLAN_STORAGE: string = "StintLab_racePlan";
 
   drivers: DriverModel[] = [];
-  race: RaceModel = new RaceModel();
+  race: RaceModel = createEmptyRaceModel();
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
   validState: boolean = false;
@@ -50,7 +50,7 @@ export class StintLabComponent implements OnInit {
 
   constructor(
     private logger:NGXLogger,
-    private localStorageServiceService:LocalStorageServiceService,
+    private localStorageServiceService:LocalStorageService,
     private stintcalculatorService:StintcalculatorService
   ){}
 
@@ -74,39 +74,26 @@ export class StintLabComponent implements OnInit {
     this.validateInputs();
   }
 
-  persistRace(){
-    this.localStorageServiceService.set<RaceModel>(StintLabComponent.RACE_STORAGE, this.race);
+  persistAndCalculateStints() {
+    this.persistDrivers();
+    this.persistRace();
+    this.calculateStints();
   }
-  persistDrivers(){
-    this.localStorageServiceService.set<DriverModel[]>(StintLabComponent.DRIVER_STORAGE, this.drivers);
-  }
+
+  
   persistPlan(){
     if(this.racePlan != undefined){
       this.localStorageServiceService.set<RacePlanModel>(StintLabComponent.PLAN_STORAGE, this.racePlan!);
     }
   }
-
+  
   updateDriver(driver: DriverModel, stintCounter: number){
     this.logger.info('changing driver to ' + driver.name + 'for stint ' + stintCounter);
     this.racePlan!.stints[stintCounter].driver = driver;
+    this.calculateStints();
   }
 
-  calculateStints(){
-    this.validateInputs();
-    if(this.validState) {
-      var driverPerStintList: DriverModel[] = [];
-      if(this.racePlan != undefined){
-        driverPerStintList = this.racePlan!.stints
-        .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
-        .map(d => d.driver!);
-      }
-
-      this.racePlan = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
-      this.persistPlan();
-      this.showTable = true;
-    }
-  }
-
+  
   validateInputs() {
     if(this.drivers.length == 0){
       this.logger.info("no drivers found");
@@ -116,21 +103,21 @@ export class StintLabComponent implements OnInit {
     for(let driver of this.drivers){
       if(!driver.name){
         this.logger.info("driver name invalid");
-      this.validState = false;
-      return;
+        this.validState = false;
+        return;
       }
       if(!this.validNumber(driver.fuelConsumption)){
         this.logger.info("driver fuelConsumption invalid");
-      this.validState = false;
-      return;
+        this.validState = false;
+        return;
       }
       if(!this.validNumber(driver.laptimeInMilliseconds)){
         this.logger.info("driver laptimeInMilliseconds invalid");
-      this.validState = false;
-      return;
+        this.validState = false;
+        return;
       }
     }
-
+    
     if(!this.race.raceStart){
       this.logger.info("race start invalid");
       this.validState = false;
@@ -158,9 +145,32 @@ export class StintLabComponent implements OnInit {
     }
     this.validState = true;
   }
-
+  
   private validNumber(input: number | undefined){
     return input != undefined && Number.isFinite(input) && input > 0;
   }
-
+  
+  private persistRace(){
+    this.localStorageServiceService.set<RaceModel>(StintLabComponent.RACE_STORAGE, this.race);
+  }
+  
+  private persistDrivers(){
+    this.localStorageServiceService.set<DriverModel[]>(StintLabComponent.DRIVER_STORAGE, this.drivers);
+  }
+  
+  private calculateStints(){
+    this.validateInputs();
+    if(this.validState) {
+      var driverPerStintList: DriverModel[] = [];
+      if(this.racePlan != undefined){
+        driverPerStintList = this.racePlan!.stints
+        .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
+        .map(d => d.driver!);
+      }
+  
+      this.racePlan = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
+      this.persistPlan();
+      this.showTable = true;
+    }
+  }
 }

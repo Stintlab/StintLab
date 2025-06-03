@@ -8,8 +8,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputMaskModule } from 'primeng/inputmask';
 import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
-import { RaceModel } from '../../models/RaceModel';
-import { DurationUtil } from '../../util/DurationUtil';
+import { RaceModel } from '../../models/race-model';
+import { DurationUtil } from '../../util/duration-util';
+import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 
 @Component({
   selector: 'app-racemanager',
@@ -22,8 +23,9 @@ import { DurationUtil } from '../../util/DurationUtil';
     InputMaskModule,
     InputTextModule,
     DatePickerModule,
-    SelectModule
-  ],
+    SelectModule,
+    MillisToDurationPipe
+],
   templateUrl: './racemanager.component.html',
   styleUrls: ['./racemanager.component.css']
 })
@@ -33,19 +35,6 @@ export class RacemanagerComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  }
-
-  getRaceDuration(){
-    var raceDuration = this.race.raceDurationInMilliseconds;
-    if(raceDuration == undefined) {
-      return null;
-    }
-    else {
-      var d = DurationUtil.fromMilliseconds(raceDuration);
-      return DurationUtil.formatNumber(d.hours, 2)
-      + ":" + DurationUtil.formatNumber(d.minutes, 2)
-      + ":" + DurationUtil.formatNumber(d.seconds, 2);
-    }
   }
 
   getRefuelRate(){

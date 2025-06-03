@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RacemanagerComponent } from './racemanager.component';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { importProvidersFrom } from '@angular/core';
-import { RaceModel } from '../../models/RaceModel';
+import { createEmptyRaceModel, RaceModel } from '../../models/race-model';
 
 describe('RacemanagerComponent', () => {
   let component: RacemanagerComponent;
@@ -21,7 +21,7 @@ describe('RacemanagerComponent', () => {
 
     fixture = TestBed.createComponent(RacemanagerComponent);
     component = fixture.componentInstance;
-    component.race = new RaceModel();
+    component.race = createEmptyRaceModel();
     fixture.detectChanges();
   });
 
