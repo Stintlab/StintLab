@@ -10,7 +10,7 @@ import { DatePickerModule } from 'primeng/datepicker';
 import { SelectModule } from 'primeng/select';
 import { RaceModel } from '../../models/race-model';
 import { DurationUtil } from '../../util/duration-util';
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
+import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 
 @Component({
   selector: 'app-racemanager',

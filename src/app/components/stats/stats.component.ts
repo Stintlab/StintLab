@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { TableModule } from 'primeng/table';
 import { PanelModule } from 'primeng/panel';
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
+import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 import { RacePlanModel } from '../../models/race-plan-model';
 import { DriverModel } from '../../models/driver-model';
 

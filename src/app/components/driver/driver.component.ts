@@ -8,7 +8,7 @@ import { InputMaskModule } from 'primeng/inputmask';
 import { InputTextModule } from 'primeng/inputtext';
 import { DriverModel } from '../../models/driver-model';
 import { DurationUtil } from '../../util/duration-util';
-import { MillisToDurationPipe } from '../../pipes/millisToDuration/millis-to-duration.pipe';
+import { MillisToDurationPipe } from '../../pipes/millis-to-duration/millis-to-duration.pipe';
 
 @Component({
   selector: 'app-driver',

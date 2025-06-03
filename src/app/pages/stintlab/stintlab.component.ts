@@ -8,12 +8,12 @@ import { CardModule } from 'primeng/card';
 import { TableModule } from 'primeng/table';
 import { SelectModule } from 'primeng/select';
 import { TagModule } from 'primeng/tag';
-import { LocalStorageService } from '../../services/localstorageservice/local-storage.service';
+import { LocalStorageService } from '../../services/local-storage/local-storage.service';
 import { StintcalculatorService } from '../../services/stintcalculator/stintcalculator.service';
 import { RacemanagerComponent } from '../../components/racemanager/racemanager.component';
 import { DrivermanagerComponent } from '../../components/drivermanager/drivermanager.component';
 import { StatsComponent } from "../../components/stats/stats.component";
-import { MillisToDurationPipe } from "../../pipes/millisToDuration/millis-to-duration.pipe";
+import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 import { DriverModel } from '../../models/driver-model';
 import { RacePlanModel } from '../../models/race-plan-model';
 
