@@ -22,7 +22,11 @@ describe('DriverComponent', () => {
 
     fixture = TestBed.createComponent(DriverComponent);
     component = fixture.componentInstance;
-    component.driver = new DriverModel("testdriver");
+    component.driver = {
+      name: 'test-driver',
+      fuelConsumption: undefined,
+      laptimeInMilliseconds: undefined
+    };
     fixture.detectChanges();
   });
 

@@ -21,10 +21,24 @@ describe('StatsComponent', () => {
     fixture = TestBed.createComponent(StatsComponent);
     component = fixture.componentInstance;
     component.drivers = [];
-    var stintModel = new StintModel(0);
-    stintModel.stintEndTime = new Date();
-    var driver = new DriverModel("test");
-    stintModel.driver = driver;
+    var driver: DriverModel = {
+      name: 'test',
+      fuelConsumption: undefined,
+      laptimeInMilliseconds: undefined
+    };
+    var stintModel: StintModel = {
+      counter: 0,
+      driver: driver,
+      stintEndTime: new Date(),
+      fuelUsed: undefined,
+      laps: undefined,
+      refuelTime: undefined,
+      stintStartTime: undefined,
+      timeDriven: undefined,
+      timeInPitlane: undefined,
+      totalStintLength: undefined
+    };
+
     component.racePlan = new RacePlanModel(0, [stintModel]);
     fixture.detectChanges();
   });
