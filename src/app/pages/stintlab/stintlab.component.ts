@@ -42,7 +42,7 @@ export class StintLabComponent implements OnInit {
   private static readonly PLAN_STORAGE: string = "StintLab_racePlan";
 
   drivers: DriverModel[] = [];
-  race: RaceModel = createEmptyRaceModel();
+  race!: RaceModel;
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
   validState: boolean = false;
@@ -56,9 +56,12 @@ export class StintLabComponent implements OnInit {
 
   ngOnInit(): void {
     var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintLabComponent.RACE_STORAGE);
-    if(persistedRaceModel != null){
+    
+    if(persistedRaceModel){
       this.race = persistedRaceModel;
       this.race.raceStart = new Date(this.race.raceStart!);
+    }else {
+      this.race = createEmptyRaceModel();
     }
 
     var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintLabComponent.DRIVER_STORAGE);
