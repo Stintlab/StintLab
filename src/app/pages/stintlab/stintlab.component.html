@@ -59,13 +59,42 @@
               />
             </td>
             <td>{{ stint.stintStartTime | date: 'dd.MM.yyyy HH:mm:ss z'}}</td>
-            <td>{{ stint.laps }}</td>
-            <td>{{ stint.fuelUsed | number : "1.0-2" }}</td>
+            <td>
+              <p-inputnumber
+                mode="decimal"
+                [useGrouping]="false"
+                [maxFractionDigits]="0"
+                [ngModel]="stint.actualLaps ?? stint.laps"
+                (ngModelChange)="stint.actualLaps = $event"
+                (focusout)="calculateStints()"
+              />
+            </td>
+            <td>
+              <p-inputnumber
+                mode="decimal"
+                [useGrouping]="false"
+                [maxFractionDigits]="3"
+                [ngModel]="stint.actualfuelUsed ?? stint.fuelUsed"
+                (ngModelChange)="stint.actualfuelUsed = $event"
+                (focusout)="calculateStints()"
+              />
+            </td>
             <td>{{ stint.timeDriven | millisToDuration }}</td>
             <td>{{ stint.timeInPitlane | millisToDuration }}</td>
             <td>{{ stint.refuelTime | millisToDuration }}</td>
             <td>{{ stint.totalStintLength | millisToDuration }}</td>
-            <td>{{ stint.stintEndTime | date: 'dd.MM.yyyy HH:mm:ss z' }}</td>
+            <td>
+              <p-datepicker
+                [showTime]="true"
+                hourFormat="24"
+                dateFormat="dd.mm.yy"
+                [showSeconds]="true"
+                [ngModel]="stint.actualStintEndTime ?? stint.stintEndTime | primeDate"
+                (ngModelChange)="stint.actualStintEndTime = $event"
+                (focusout)="calculateStints()"
+                appendTo="body"
+              />
+            </td>
           </tr>
         </ng-template>
       </p-table>

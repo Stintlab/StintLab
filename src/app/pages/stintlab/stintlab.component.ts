@@ -16,6 +16,9 @@ import { StatsComponent } from "../../components/stats/stats.component";
 import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 import { DriverModel } from '../../models/driver-model';
 import { RacePlanModel } from '../../models/race-plan-model';
+import { DatePickerModule } from 'primeng/datepicker';
+import { PrimeDatePipe } from '../../pipes/prime-date/prime-date.pipe';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 @Component({
   selector: 'app-stintlab',
@@ -31,7 +34,10 @@ import { RacePlanModel } from '../../models/race-plan-model';
     SelectModule,
     DrivermanagerComponent,
     RacemanagerComponent,
-    StatsComponent
+    StatsComponent,
+    DatePickerModule,
+    PrimeDatePipe,
+    InputNumberModule
 ],
   templateUrl: './stintlab.component.html',
   styleUrl: './stintlab.component.scss'
@@ -158,15 +164,15 @@ export class StintLabComponent implements OnInit {
     this.localStorageServiceService.set<DriverModel[]>(StintLabComponent.DRIVER_STORAGE, this.drivers);
   }
   
-  private calculateStints(){
+  calculateStints(){
     this.validateInputs();
     
     if(this.validState) {
       var driverPerStintList: DriverModel[] = [];
       if(this.racePlan != undefined){
         driverPerStintList = this.racePlan!.stints
-        .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
-        .map(d => d.driver!);
+          .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
+          .map(d => d.driver!);
       }
   
       this.racePlan = this.stintcalculatorService.calculateStints(this.race, this.racePlan, driverPerStintList, this.drivers[0]);

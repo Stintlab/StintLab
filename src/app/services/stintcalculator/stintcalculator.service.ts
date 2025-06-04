@@ -93,7 +93,7 @@ constructor(private logger: NGXLogger) { }
       return {value: fallback, accessed: undefined}
     }
     var accessed = accessor(racePlan);
-    return {value: accessed ?? fallback, accessed: undefined}
+    return {value: accessed ?? fallback, accessed: accessed}
   }
 
    private getOrDefault<T>(array: T[], index: number, fallback: T) : T {
