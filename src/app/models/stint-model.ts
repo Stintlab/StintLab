@@ -10,4 +10,8 @@ export interface StintModel {
   refuelTime: number | undefined;
   totalStintLength: number | undefined;
   stintEndTime: Date | undefined;
+
+  actualStintEndTime: Date | undefined;
+  actualFuelUsed: number | undefined;
+  actualLaps: number | undefined;
 }

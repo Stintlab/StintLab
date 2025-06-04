@@ -12,7 +12,7 @@ export class StintcalculatorService {
 
 constructor(private logger: NGXLogger) { }
 
-  calculateStints(race: RaceModel, drivers: DriverModel[], defaultDriver: DriverModel) : RacePlanModel {
+  calculateStints(race: RaceModel, currentRacePlan: RacePlanModel | undefined, defaultDriver: DriverModel) : RacePlanModel {
     //prepare some calc values
     var stintCounter = 0;
     var stints: StintModel[] = [];
@@ -21,42 +21,15 @@ constructor(private logger: NGXLogger) { }
     var fullRefillTime: number = Math.ceil(race.fuelTankSizeInLiters! * race.refuelRateInMillisecondsPerLiterRefueled!);
 
     //calculate the first full stint, as the car is filled before the race, no need to calculate time in the pitlane
-    var driver: DriverModel = this.getOrDefault(drivers, stintCounter, defaultDriver);
-    var lapsInFullStint = Math.floor(race.fuelTankSizeInLiters! / driver.fuelConsumption!);
-    var fuelUsed = lapsInFullStint * driver.fuelConsumption!;
-    var stintRaceTime = lapsInFullStint * driver.laptimeInMilliseconds!;
-    var refuelTime = 0;
-    var timeInPitlane = 0;
-    var stintTime = stintRaceTime;
-    var stintEndTime: Date = new Date(stintStartTime.getTime() + stintTime);
+    var nextStint = this.getStintModel(currentRacePlan, stintCounter, defaultDriver, race, stintStartTime, 0, 0);
 
     //check if the last calculated full stint ends before the race does, if so, add it to the plan and calculate another one
-    while(raceEndTime > stintEndTime){
-      var stint: StintModel = {
-        counter: stintCounter,
-        driver: driver,
-        laps: lapsInFullStint,
-        stintStartTime: stintStartTime,
-        stintEndTime: stintEndTime,
-        fuelUsed: fuelUsed,
-        timeInPitlane: timeInPitlane,
-        refuelTime: refuelTime,
-        timeDriven: stintRaceTime,
-        totalStintLength: stintTime,
-      };
-      
-      stints.push(stint);
+    while(raceEndTime > nextStint.stintEndTime!){
+      stints.push(nextStint);
 
       stintCounter++;
-      stintStartTime = stintEndTime;
-      driver = this.getOrDefault(drivers, stintCounter, defaultDriver);
-      lapsInFullStint = Math.floor(race.fuelTankSizeInLiters! / driver.fuelConsumption!);
-      fuelUsed = lapsInFullStint * driver.fuelConsumption!;
-      stintRaceTime = lapsInFullStint * driver.laptimeInMilliseconds!;
-      refuelTime = fullRefillTime;
-      timeInPitlane = race.driveThroughInMilliseconds! + refuelTime;
-      stintTime = stintRaceTime + timeInPitlane;
-      stintEndTime = new Date(stintStartTime.getTime() + stintTime);
+      stintStartTime = nextStint.stintEndTime!;
+      nextStint = this.getStintModel(currentRacePlan, stintCounter, defaultDriver, race, stintStartTime, fullRefillTime, race.driveThroughInMilliseconds! + fullRefillTime);
     }
 
     /*
@@ -69,43 +42,57 @@ constructor(private logger: NGXLogger) { }
     var remainingLaps = 0;
     do {
       remainingLaps++;
-      fuelUsed = remainingLaps * driver.fuelConsumption!;
-      stintRaceTime = remainingLaps * driver.laptimeInMilliseconds!;
+      nextStint.fuelUsed = remainingLaps * nextStint.driver!.fuelConsumption!;
+      nextStint.timeDriven = remainingLaps * nextStint.driver!.laptimeInMilliseconds!;
       if(stints.length != 0){
-        refuelTime = Math.ceil(fuelUsed * race.refuelRateInMillisecondsPerLiterRefueled!);
-        timeInPitlane = race.driveThroughInMilliseconds! + refuelTime;
+        nextStint.refuelTime = Math.ceil(nextStint.fuelUsed * race.refuelRateInMillisecondsPerLiterRefueled!);
+        nextStint.timeInPitlane = race.driveThroughInMilliseconds! + nextStint.refuelTime;
       }
       else{
-        refuelTime = 0;
-        timeInPitlane = 0;
+        nextStint.refuelTime = 0;
+        nextStint.timeInPitlane = 0;
       }
-      stintTime = stintRaceTime + timeInPitlane;
-      stintEndTime = new Date(stintStartTime.getTime() + stintTime);
+      nextStint.totalStintLength = nextStint.timeDriven + nextStint.timeInPitlane;
+      nextStint.stintEndTime = new Date(stintStartTime.getTime() + nextStint.timeDriven);
     }
-    while(raceEndTime > stintEndTime);
+    while(raceEndTime > nextStint.stintEndTime);
 
-    var stint : StintModel = {
-      counter: stintCounter,
-      driver: driver,
-      laps: lapsInFullStint,
-      stintStartTime: stintStartTime,
-      stintEndTime: stintEndTime,
-      fuelUsed: fuelUsed,
-      timeInPitlane: timeInPitlane,
-      refuelTime: refuelTime,
-      timeDriven: stintRaceTime,
-      totalStintLength: stintTime,
-    };
-    stints.push(stint);
-    var totalLaps = (stintCounter - 1) * lapsInFullStint + remainingLaps;
+    stints.push(nextStint);
+    var totalLaps = (stintCounter - 1) * nextStint.laps! + remainingLaps;
     return new RacePlanModel(totalLaps, stints);
   }
 
 
-  private getOrDefault<T>(array: T[], index: number, fallback: T) : T {
-    if(array.length > index){
-      return array[index];
+  private getStintModel(currentRacePlan: RacePlanModel | undefined, stintCounter: number, defaultDriver: DriverModel, race: RaceModel, stintStartTime: Date, refuelTime: number, timeToPassPitlane: number) : StintModel {
+    var driver = this.getFromRaceplan<DriverModel>(currentRacePlan, (rp) => rp.stints[stintCounter].driver, defaultDriver).value;
+    var lapsInFullStint = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter].actualLaps, Math.floor(race.fuelTankSizeInLiters! / driver.fuelConsumption!));
+    var timeDriven = lapsInFullStint.value * driver.laptimeInMilliseconds!;
+
+    var stintEndTime = this.getFromRaceplan<Date>(currentRacePlan, (rp) => rp.stints[stintCounter].actualStintEndTime, new Date(stintStartTime.getTime() + timeDriven));
+    var fuelUsed = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter].actualFuelUsed, lapsInFullStint.value * driver.fuelConsumption!);
+
+    return {
+        counter: stintCounter,
+        driver: driver,
+        laps: lapsInFullStint.value,
+        stintStartTime: stintStartTime,
+        stintEndTime: stintEndTime.value,
+        fuelUsed: fuelUsed.value,
+        timeInPitlane: timeToPassPitlane + refuelTime,
+        refuelTime: refuelTime,
+        timeDriven: timeDriven,
+        totalStintLength: timeDriven + timeToPassPitlane + refuelTime,
+        actualFuelUsed: fuelUsed.accessed,
+        actualLaps: lapsInFullStint.accessed,
+        actualStintEndTime: stintEndTime.accessed
+      };
+  }
+
+  private getFromRaceplan<T>(racePlan: RacePlanModel | undefined, accessor: (rp: RacePlanModel) => T | undefined, fallback: T) : { value: T, accessed: T | undefined } {
+    if(!racePlan){
+      return {value: fallback, accessed: undefined}
     }
-    return fallback;
+    var accessed = accessor(racePlan);
+    return {value: accessed ?? fallback, accessed: undefined}
   }
 }
