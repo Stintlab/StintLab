@@ -161,8 +161,15 @@ export class StintLabComponent implements OnInit {
   private calculateStints(){
     this.validateInputs();
     
-    if(this.validState) {  
-      this.racePlan = this.stintcalculatorService.calculateStints(this.race, this.racePlan, this.drivers[0]);
+    if(this.validState) {
+      var driverPerStintList: DriverModel[] = [];
+      if(this.racePlan != undefined){
+        driverPerStintList = this.racePlan!.stints
+        .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
+        .map(d => d.driver!);
+      }
+  
+      this.racePlan = this.stintcalculatorService.calculateStints(this.race, this.racePlan, driverPerStintList, this.drivers[0]);
       this.persistPlan();
       this.showTable = true;
     }

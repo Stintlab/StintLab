@@ -12,7 +12,7 @@ export class StintcalculatorService {
 
 constructor(private logger: NGXLogger) { }
 
-  calculateStints(race: RaceModel, currentRacePlan: RacePlanModel | undefined, defaultDriver: DriverModel) : RacePlanModel {
+  calculateStints(race: RaceModel, currentRacePlan: RacePlanModel | undefined, drivers: DriverModel[], defaultDriver: DriverModel) : RacePlanModel {
     //prepare some calc values
     var stintCounter = 0;
     var stints: StintModel[] = [];
@@ -21,7 +21,7 @@ constructor(private logger: NGXLogger) { }
     var fullRefillTime: number = Math.ceil(race.fuelTankSizeInLiters! * race.refuelRateInMillisecondsPerLiterRefueled!);
 
     //calculate the first full stint, as the car is filled before the race, no need to calculate time in the pitlane
-    var nextStint = this.getStintModel(currentRacePlan, stintCounter, defaultDriver, race, stintStartTime, 0, 0);
+    var nextStint = this.getStintModel(currentRacePlan, stintCounter, defaultDriver, race, drivers, stintStartTime, 0, 0);
 
     //check if the last calculated full stint ends before the race does, if so, add it to the plan and calculate another one
     while(raceEndTime > nextStint.stintEndTime!){
@@ -29,7 +29,7 @@ constructor(private logger: NGXLogger) { }
 
       stintCounter++;
       stintStartTime = nextStint.stintEndTime!;
-      nextStint = this.getStintModel(currentRacePlan, stintCounter, defaultDriver, race, stintStartTime, fullRefillTime, race.driveThroughInMilliseconds! + fullRefillTime);
+      nextStint = this.getStintModel(currentRacePlan, stintCounter, defaultDriver, race, drivers, stintStartTime, fullRefillTime, race.driveThroughInMilliseconds! + fullRefillTime);
     }
 
     /*
@@ -63,13 +63,13 @@ constructor(private logger: NGXLogger) { }
   }
 
 
-  private getStintModel(currentRacePlan: RacePlanModel | undefined, stintCounter: number, defaultDriver: DriverModel, race: RaceModel, stintStartTime: Date, refuelTime: number, timeToPassPitlane: number) : StintModel {
-    var driver = this.getFromRaceplan<DriverModel>(currentRacePlan, (rp) => rp.stints[stintCounter].driver, defaultDriver).value;
-    var lapsInFullStint = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter].actualLaps, Math.floor(race.fuelTankSizeInLiters! / driver.fuelConsumption!));
+  private getStintModel(currentRacePlan: RacePlanModel | undefined, stintCounter: number, defaultDriver: DriverModel, race: RaceModel, drivers: DriverModel[], stintStartTime: Date, refuelTime: number, timeToPassPitlane: number) : StintModel {
+    var driver = this.getOrDefault(drivers, stintCounter, defaultDriver);
+    var lapsInFullStint = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter]?.actualLaps, Math.floor(race.fuelTankSizeInLiters! / driver.fuelConsumption!));
     var timeDriven = lapsInFullStint.value * driver.laptimeInMilliseconds!;
 
-    var stintEndTime = this.getFromRaceplan<Date>(currentRacePlan, (rp) => rp.stints[stintCounter].actualStintEndTime, new Date(stintStartTime.getTime() + timeDriven));
-    var fuelUsed = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter].actualFuelUsed, lapsInFullStint.value * driver.fuelConsumption!);
+    var stintEndTime = this.getFromRaceplan<Date>(currentRacePlan, (rp) => rp.stints[stintCounter]?.actualStintEndTime, new Date(stintStartTime.getTime() + timeDriven));
+    var fuelUsed = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter]?.actualFuelUsed, lapsInFullStint.value * driver.fuelConsumption!);
 
     return {
         counter: stintCounter,
@@ -94,5 +94,12 @@ constructor(private logger: NGXLogger) { }
     }
     var accessed = accessor(racePlan);
     return {value: accessed ?? fallback, accessed: undefined}
+  }
+
+   private getOrDefault<T>(array: T[], index: number, fallback: T) : T {
+    if(array.length > index){
+      return array[index];
+    }
+    return fallback;
   }
 }
