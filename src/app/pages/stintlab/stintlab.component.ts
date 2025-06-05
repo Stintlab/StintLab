@@ -182,16 +182,4 @@ export class StintLabComponent implements OnInit {
       this.showTable = true;
     }
   }
-
-  setEndTimeToNow(stint: StintModel) {
-    var current = new Date();
-    if(stint.stintStartTime! <= current) {
-      stint.actualStintEndTime = new Date();
-    }
-  }
-
-  setEndTime(stint: StintModel) {
-    stint.actualStintEndTime = undefined;
-    console.log('A')
-  }
 }
