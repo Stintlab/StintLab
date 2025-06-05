@@ -73,12 +73,12 @@ constructor(private logger: NGXLogger) { }
     var driver = this.getOrDefault(drivers, stintCounter, defaultDriver);
     var lapsInFullStint = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter]?.actualLaps, Math.floor(tankSize / driver.fuelConsumption!));
     var timeDriven = lapsInFullStint.value * driver.laptimeInMilliseconds!;
-    
+
     var fuelUsed = this.getFromRaceplan(currentRacePlan, rp => rp.stints[stintCounter]?.actualFuelUsed, lapsInFullStint.value * driver.fuelConsumption!);
     
     var stintEndTime = this.getFromRaceplan<Date>(currentRacePlan, (rp) => rp.stints[stintCounter]?.actualStintEndTime, new Date(stintStartTime.getTime() + timeDriven));
     if(stintEndTime.accessed) {
-      timeDriven = stintEndTime.accessed.getTime() - stintStartTime.getTime();
+      timeDriven = stintEndTime.accessed.getTime() - stintStartTime.getTime() - timeToPassPitlane - refuelTime;
     }
 
     return {
