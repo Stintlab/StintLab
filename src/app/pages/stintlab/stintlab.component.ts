@@ -165,8 +165,6 @@ export class StintLabComponent implements OnInit {
   }
   
   calculateStints(){
-    
-    console.log('B')
     this.validateInputs();
     
     if(this.validState) {
