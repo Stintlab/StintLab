@@ -30,7 +30,7 @@ export class StintcalculatorService {
     var fuel = fuelTankSize;
 
     //calculate the first full stint, as the car is filled before the race, no need to calculate time in the pitlane
-    var nextStint = this.getStintModel(
+    var nextStint = this.recalculateNextStint(
       currentRacePlan,
       stintCounter,
       defaultDriver,
@@ -49,7 +49,7 @@ export class StintcalculatorService {
 
       stintCounter++;
       stintStartTime = nextStint.stintEndTime!;
-      nextStint = this.getStintModel(
+      nextStint = this.recalculateNextStint(
         currentRacePlan,
         stintCounter,
         defaultDriver,
@@ -98,7 +98,7 @@ export class StintcalculatorService {
     return new RacePlanModel(totalLaps, stints);
   }
 
-  private getStintModel(
+  private recalculateNextStint(
     currentRacePlan: RacePlanModel | undefined,
     stintCounter: number,
     defaultDriver: DriverModel,
