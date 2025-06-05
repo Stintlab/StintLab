@@ -36,7 +36,10 @@ describe('StatsComponent', () => {
       stintStartTime: undefined,
       timeDriven: undefined,
       timeInPitlane: undefined,
-      totalStintLength: undefined
+      totalStintLength: undefined,
+      actualFuelUsed: undefined,
+      actualLaps: undefined,
+      actualStintEndTime: undefined
     };
 
     component.racePlan = new RacePlanModel(0, [stintModel]);
