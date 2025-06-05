@@ -59,41 +59,62 @@
               />
             </td>
             <td>{{ stint.stintStartTime | date: 'dd.MM.yyyy HH:mm:ss z'}}</td>
-            <td>
-              <p-inputnumber
-                mode="decimal"
-                [useGrouping]="false"
-                [maxFractionDigits]="0"
-                [ngModel]="stint.actualLaps ?? stint.laps"
-                (ngModelChange)="stint.actualLaps = $event"
-                (focusout)="calculateStints()"
-              />
+            <td [pEditableColumn]="stint.actualLaps" pEditableColumnField="actualLaps">
+              <p-cellEditor>
+                    <ng-template #input>
+                      <p-inputnumber
+                        mode="decimal"
+                        [useGrouping]="false"
+                        [maxFractionDigits]="0"
+                        [ngModel]="stint.actualLaps ?? stint.laps"
+                        (ngModelChange)="stint.actualLaps = $event"
+                        (focusout)="calculateStints()"
+                      />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ stint.actualLaps ?? stint.laps }}
+                    </ng-template>
+                  </p-cellEditor>
             </td>
-            <td>
-              <p-inputnumber
-                mode="decimal"
-                [useGrouping]="false"
-                [maxFractionDigits]="3"
-                [ngModel]="stint.actualfuelUsed ?? stint.fuelUsed"
-                (ngModelChange)="stint.actualfuelUsed = $event"
-                (focusout)="calculateStints()"
-              />
+            <td [pEditableColumn]="stint.actualFuelUsed" pEditableColumnField="actualFuelUsed">
+              <p-cellEditor>
+                    <ng-template #input>
+                        <p-inputnumber
+                            mode="decimal"                            
+                            [useGrouping]="false"
+                            [maxFractionDigits]="3"
+                            [ngModel]="stint.actualFuelUsed ?? stint.fuelUsed"
+                            (ngModelChange)="stint.actualFuelUsed = $event"
+                            (focusout)="calculateStints()"
+                            />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ stint.actualFuelUsed ?? stint.fuelUsed }}
+                    </ng-template>
+                </p-cellEditor>
             </td>
             <td>{{ stint.timeDriven | millisToDuration }}</td>
             <td>{{ stint.timeInPitlane | millisToDuration }}</td>
             <td>{{ stint.refuelTime | millisToDuration }}</td>
             <td>{{ stint.totalStintLength | millisToDuration }}</td>
-            <td>
-              <p-datepicker
-                [showTime]="true"
-                hourFormat="24"
-                dateFormat="dd.mm.yy"
-                [showSeconds]="true"
-                [ngModel]="stint.actualStintEndTime ?? stint.stintEndTime | primeDate"
-                (ngModelChange)="stint.actualStintEndTime = $event"
-                (focusout)="calculateStints()"
-                appendTo="body"
-              />
+            <td [pEditableColumn]="stint.actualStintEndTime" pEditableColumnField="actualStintEndTime">
+              <p-cellEditor>
+                    <ng-template #input>
+                      <p-datepicker
+                        [showTime]="true"
+                        hourFormat="24"
+                        dateFormat="dd.mm.yy"
+                        [showSeconds]="true"
+                        [ngModel]="stint.actualStintEndTime ?? stint.stintEndTime | primeDate"
+                        (ngModelChange)="stint.actualStintEndTime = $event"
+                        (focusout)="calculateStints()"
+                        appendTo="body"
+                      />
+                    </ng-template>
+                    <ng-template #output>
+                        {{ (stint.actualStintEndTime ?? stint.stintEndTime) | date: 'dd.MM.yyyy HH:mm:ss z' }}
+                    </ng-template>
+                </p-cellEditor>
             </td>
           </tr>
         </ng-template>

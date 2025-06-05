@@ -19,11 +19,11 @@ import { RacePlanModel } from '../../models/race-plan-model';
 import { DatePickerModule } from 'primeng/datepicker';
 import { PrimeDatePipe } from '../../pipes/prime-date/prime-date.pipe';
 import { InputNumberModule } from 'primeng/inputnumber';
+import { StintModel } from '../../models/stint-model';
 
 @Component({
   selector: 'app-stintlab',
   imports: [
-    DecimalPipe,
     DatePipe,
     MillisToDurationPipe,
     FormsModule,
@@ -165,6 +165,8 @@ export class StintLabComponent implements OnInit {
   }
   
   calculateStints(){
+    
+    console.log('B')
     this.validateInputs();
     
     if(this.validState) {
@@ -179,5 +181,17 @@ export class StintLabComponent implements OnInit {
       this.persistPlan();
       this.showTable = true;
     }
+  }
+
+  setEndTimeToNow(stint: StintModel) {
+    var current = new Date();
+    if(stint.stintStartTime! <= current) {
+      stint.actualStintEndTime = new Date();
+    }
+  }
+
+  setEndTime(stint: StintModel) {
+    stint.actualStintEndTime = undefined;
+    console.log('A')
   }
 }
