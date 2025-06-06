@@ -16,9 +16,6 @@ import { StatsComponent } from "../../components/stats/stats.component";
 import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 import { DriverModel } from '../../models/driver-model';
 import { RacePlanModel } from '../../models/race-plan-model';
-import { DatePickerModule } from 'primeng/datepicker';
-import { PrimeDatePipe } from '../../pipes/prime-date/prime-date.pipe';
-import { InputNumberModule } from 'primeng/inputnumber';
 import { InputBufferComponent } from '../../components/input-buffer/input-buffer.component';
 
 @Component({
@@ -35,9 +32,6 @@ import { InputBufferComponent } from '../../components/input-buffer/input-buffer
     DrivermanagerComponent,
     RacemanagerComponent,
     StatsComponent,
-    DatePickerModule,
-    PrimeDatePipe,
-    InputNumberModule,
     InputBufferComponent,
     DecimalPipe
 ],
