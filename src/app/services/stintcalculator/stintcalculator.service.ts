@@ -98,7 +98,6 @@ export class StintcalculatorService {
     var totalLaps = stints
       .map(stint => stint.actualLaps ?? stint.laps!)
       .reduce((prev, cur) => prev + cur);
-    console.log(totalLaps)
     return new RacePlanModel(totalLaps, stints);
   }
 
