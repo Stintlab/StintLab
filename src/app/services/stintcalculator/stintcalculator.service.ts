@@ -93,8 +93,11 @@ export class StintcalculatorService {
       );
     } while (raceEndTime > nextStint.stintEndTime);
 
+    nextStint.laps = nextStint.actualLaps ?? remainingLaps;
     stints.push(nextStint);
-    var totalLaps = (stintCounter - 1) * nextStint.laps! + remainingLaps;
+    var totalLaps = stints
+      .map(stint => stint.actualLaps ?? stint.laps!)
+      .reduce((prev, cur) => prev + cur);
     return new RacePlanModel(totalLaps, stints);
   }
 

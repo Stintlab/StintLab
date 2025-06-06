@@ -58,9 +58,10 @@ export class StintLabComponent implements OnInit {
 
   ngOnInit(): void {
     var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintLabComponent.RACE_STORAGE);
-    if(persistedRaceModel != null){
+    
+    if(persistedRaceModel){
       this.race = persistedRaceModel;
-      this.race.raceStart = new Date(this.race.raceStart!);
+      this.race.raceStart = this.race.raceStart ? new Date(this.race.raceStart!) : undefined;
     }
 
     var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintLabComponent.DRIVER_STORAGE);
