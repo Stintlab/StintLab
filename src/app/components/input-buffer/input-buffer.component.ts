@@ -25,13 +25,13 @@ export class InputBufferComponent implements OnInit, OnChanges {
   @Input() validationCheck: (value: any) => boolean = () => true;
   @Input() inputOptions: InputBufferOptions = {};
 
-  @Input() value!: number;
-  @Output() valueChange: EventEmitter<number> = new EventEmitter()
+  @Input() value!: any;
+  @Output() valueChange: EventEmitter<any> = new EventEmitter()
   
   @Input() validInput: boolean = false;
   @Output() validInputChange: EventEmitter<boolean> = new EventEmitter();
 
-  buffer!: number
+  buffer!: any
 
   constructor() { }
 

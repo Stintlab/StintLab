@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PrimeDatePipe implements PipeTransform {
 
-  transform(date: any): Date {
-    return new Date(date);
+  transform(date: any): Date | undefined {
+    return date ? new Date(date) : undefined;
   }
 
 }
