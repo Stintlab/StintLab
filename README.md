@@ -5,9 +5,9 @@
 
 # StintLab
 
-**StintLab is your tool to manage your motorsport team event.**  
-Plan stints, determine fuel requirements and communicate driver timings from start to finish to come out ahead.
-Its licensed under the AGPLv3, more for info see [license.md](https://github.com/StintLab/StintLab/blob/main/license.md).
+**StintLab** is an open-source project focused on **motorsport team event management**, built especially with the high-paced world of **E-Sports** racing in mind.
+
+Whether you're leading a virtual endurance team or just love optimizing race strategy, StintLab is being designed to help you **track your evolving race strategy, assess your options, and react in real time**—because every second counts.
 
 ## How to use it
 Easy.
