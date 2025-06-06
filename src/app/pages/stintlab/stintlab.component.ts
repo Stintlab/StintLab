@@ -16,10 +16,7 @@ import { StatsComponent } from "../../components/stats/stats.component";
 import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 import { DriverModel } from '../../models/driver-model';
 import { RacePlanModel } from '../../models/race-plan-model';
-import { DatePickerModule } from 'primeng/datepicker';
-import { PrimeDatePipe } from '../../pipes/prime-date/prime-date.pipe';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { StintModel } from '../../models/stint-model';
+import { InputBufferComponent } from '../../components/input-buffer/input-buffer.component';
 
 @Component({
   selector: 'app-stintlab',
@@ -35,9 +32,8 @@ import { StintModel } from '../../models/stint-model';
     DrivermanagerComponent,
     RacemanagerComponent,
     StatsComponent,
-    DatePickerModule,
-    PrimeDatePipe,
-    InputNumberModule
+    InputBufferComponent,
+    DecimalPipe
 ],
   templateUrl: './stintlab.component.html',
   styleUrl: './stintlab.component.scss'
