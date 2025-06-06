@@ -19,7 +19,7 @@ import { RacePlanModel } from '../../models/race-plan-model';
 import { DatePickerModule } from 'primeng/datepicker';
 import { PrimeDatePipe } from '../../pipes/prime-date/prime-date.pipe';
 import { InputNumberModule } from 'primeng/inputnumber';
-import { StintModel } from '../../models/stint-model';
+import { InputBufferComponent } from '../../components/input-buffer/input-buffer.component';
 
 @Component({
   selector: 'app-stintlab',
@@ -37,7 +37,9 @@ import { StintModel } from '../../models/stint-model';
     StatsComponent,
     DatePickerModule,
     PrimeDatePipe,
-    InputNumberModule
+    InputNumberModule,
+    InputBufferComponent,
+    DecimalPipe
 ],
   templateUrl: './stintlab.component.html',
   styleUrl: './stintlab.component.scss'

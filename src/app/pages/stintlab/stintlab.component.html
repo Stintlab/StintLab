@@ -62,13 +62,11 @@
             >
               <p-cellEditor>
                 <ng-template #input>
-                  <p-inputnumber
-                    mode="decimal"
-                    [useGrouping]="false"
-                    [maxFractionDigits]="0"
-                    [ngModel]="stint.actualLaps ?? stint.laps"
-                    (ngModelChange)="stint.actualLaps = $event"
-                    (focusout)="calculateStints()"
+                  <app-input-buffer 
+                    type="number"
+                    [value]="stint.actualLaps ?? stint.laps"
+                    (valueChange)="stint.actualLaps = $event"
+                    (valueChange)="calculateStints()"
                   />
                 </ng-template>
                 <ng-template #output>
@@ -82,17 +80,16 @@
             >
               <p-cellEditor>
                 <ng-template #input>
-                  <p-inputnumber
-                    mode="decimal"
-                    [useGrouping]="false"
-                    [maxFractionDigits]="3"
-                    [ngModel]="stint.actualFuelUsed ?? stint.fuelUsed"
-                    (ngModelChange)="stint.actualFuelUsed = $event"
-                    (focusout)="calculateStints()"
+                  <app-input-buffer 
+                    type="number"
+                    [value]="stint.actualFuelUsed ?? stint.fuelUsed"
+                    (valueChange)="stint.actualFuelUsed = $event"
+                    (valueChange)="calculateStints()"
+                    [inputOptions]="{maxFractionDigits: 3}"
                   />
                 </ng-template>
                 <ng-template #output>
-                  {{ stint.actualFuelUsed ?? stint.fuelUsed }}
+                  {{ (stint.actualFuelUsed ?? stint.fuelUsed) | number }}
                 </ng-template>
               </p-cellEditor>
             </td>
