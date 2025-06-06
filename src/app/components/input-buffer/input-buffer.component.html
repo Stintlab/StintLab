@@ -1,0 +1,37 @@
+@switch (type) {
+  @case ('number') {
+    <p-inputnumber
+      mode="decimal"
+      [useGrouping]="false"
+      [maxFractionDigits]="inputOptions.maxFractionDigits ?? 0"
+      [(ngModel)]="buffer"
+      (ngModelChange)="validateInput()"
+      (focusout)="submitValueChange()"
+      (keydown.enter)="submitValueChange()"
+    />
+  }
+  @case ('text') {
+    <input
+      pInputText
+      [(ngModel)]="buffer"
+      (ngModelChange)="validateInput()"
+      (focusout)="submitValueChange()"
+      (keydown.enter)="submitValueChange()"
+      />
+  }
+  @case ('date') {
+    <p-datepicker
+      [showTime]="inputOptions.showTime ?? false"
+      [hourFormat]="inputOptions.hourFormat ?? '24'"
+      [dateFormat]="inputOptions.dateFormat ?? 'dd.mm.yyyy'"
+      [showSeconds]="inputOptions.showSeconds ?? false"
+      [appendTo]="inputOptions.appendTo ?? null"
+      [ngModel]="
+        buffer | primeDate
+      "
+      (ngModelChange)="buffer = $event"
+      (focusout)="submitValueChange()"
+      (keydown.enter)="submitValueChange()"
+    />
+  }
+}
