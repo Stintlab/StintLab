@@ -103,17 +103,12 @@
             >
               <p-cellEditor>
                 <ng-template #input>
-                  <p-datepicker
-                    [showTime]="true"
-                    hourFormat="24"
-                    dateFormat="dd.mm.yy"
-                    [showSeconds]="true"
-                    [ngModel]="
-                      stint.actualStintEndTime ?? stint.stintEndTime | primeDate
-                    "
-                    (ngModelChange)="stint.actualStintEndTime = $event"
-                    (focusout)="calculateStints()"
-                    appendTo="body"
+                  <app-input-buffer 
+                    type="date"
+                    [value]="stint.actualStintEndTime ?? stint.stintEndTime"
+                    (valueChange)="stint.actualStintEndTime = $event"
+                    (valueChange)="calculateStints()"
+                    [inputOptions]="{showTime: true, hourFormat: '24', dateFormat: 'dd.mm.yy', showSeconds: true, appendTo: 'body'}"
                   />
                 </ng-template>
                 <ng-template #output>
