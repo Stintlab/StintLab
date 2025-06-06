@@ -48,7 +48,7 @@ export class StintLabComponent implements OnInit {
   private static readonly PLAN_STORAGE: string = "StintLab_racePlan";
 
   drivers: DriverModel[] = [];
-  race!: RaceModel;
+  race: RaceModel = createEmptyRaceModel();
   racePlan: RacePlanModel | undefined = undefined;
   showTable: boolean = false;
   validState: boolean = false;
@@ -65,9 +65,7 @@ export class StintLabComponent implements OnInit {
     
     if(persistedRaceModel){
       this.race = persistedRaceModel;
-      this.race.raceStart = new Date(this.race.raceStart!);
-    }else {
-      this.race = createEmptyRaceModel();
+      this.race.raceStart = this.race.raceStart ? new Date(this.race.raceStart!) : undefined;
     }
 
     var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintLabComponent.DRIVER_STORAGE);

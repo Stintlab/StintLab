@@ -1,5 +1,5 @@
 export interface RaceModel {
-  raceStart : Date;
+  raceStart : Date | undefined;
   raceDurationInMilliseconds: number | undefined;
   fuelTankSizeInLiters: number | undefined;
   refuelRateInMillisecondsPerLiterRefueled: number | undefined;
@@ -8,7 +8,7 @@ export interface RaceModel {
 
 export function createEmptyRaceModel(): RaceModel {
     return {
-      raceStart: new Date(),
+      raceStart: undefined,
       raceDurationInMilliseconds: undefined,
       fuelTankSizeInLiters: undefined,
       refuelRateInMillisecondsPerLiterRefueled: undefined,
