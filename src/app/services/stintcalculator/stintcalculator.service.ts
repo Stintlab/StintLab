@@ -2,19 +2,19 @@ import { DriverModel } from "../../models/driver-model";
 import { Injectable } from "@angular/core";
 import { StintModel } from "../../models/stint-model";
 import { RaceModel } from "../../models/race-model";
-import { NGXLogger } from "ngx-logger";
 import { RacePlanModel } from "../../models/race-plan-model";
 
 @Injectable({
   providedIn: "root",
 })
 export class StintcalculatorService {
-  constructor(private logger: NGXLogger) {}
+  constructor() {}
 
   calculateStints(
     race: RaceModel,
     currentRacePlan: RacePlanModel | undefined,
-    drivers: DriverModel[],
+    driverPerStint: (DriverModel | undefined)[],
+    allDrivers: Map<string, DriverModel>,
     defaultDriver: DriverModel
   ): RacePlanModel {
     //prepare some calc values
@@ -34,7 +34,7 @@ export class StintcalculatorService {
       currentRacePlan,
       stintCounter,
       defaultDriver,
-      drivers,
+      driverPerStint,
       stintStartTime,
       fuel,
       fuelTankSize,
@@ -53,14 +53,14 @@ export class StintcalculatorService {
         currentRacePlan,
         stintCounter,
         defaultDriver,
-        drivers,
+        driverPerStint,
         stintStartTime,
         fuel,
         fuelTankSize,
         refuelTimePerLiter,
         race.driveThroughInMilliseconds!
       );
-      fuel -= nextStint.actualFuelUsed ?? nextStint.fuelUsed!;
+      fuel = fuelTankSize - (nextStint.actualFuelUsed ?? nextStint.fuelUsed!);
     }
 
     /*
@@ -73,24 +73,18 @@ export class StintcalculatorService {
     var remainingLaps = 0;
     do {
       remainingLaps++;
-      nextStint.fuelUsed = remainingLaps * nextStint.driver!.fuelConsumption!;
-      nextStint.timeDriven =
-        remainingLaps * nextStint.driver!.laptimeInMilliseconds!;
+      var nextDriver = allDrivers.get(nextStint.driver!)!;
+      nextStint.fuelUsed = remainingLaps * nextDriver.fuelConsumption!;
+      nextStint.timeDriven = remainingLaps * nextDriver.laptimeInMilliseconds!;
       if (stints.length != 0) {
-        nextStint.refuelTime = Math.ceil(
-          nextStint.fuelUsed * race.refuelRateInMillisecondsPerLiterRefueled!
-        );
-        nextStint.timeInPitlane =
-          race.driveThroughInMilliseconds! + nextStint.refuelTime;
+        nextStint.refuelTime = Math.ceil(nextStint.fuelUsed * race.refuelRateInMillisecondsPerLiterRefueled!);
+        nextStint.timeInPitlane = race.driveThroughInMilliseconds! + nextStint.refuelTime;
       } else {
         nextStint.refuelTime = 0;
         nextStint.timeInPitlane = 0;
       }
-      nextStint.totalStintLength =
-        nextStint.timeDriven + nextStint.timeInPitlane;
-      nextStint.stintEndTime = new Date(
-        stintStartTime.getTime() + nextStint.timeDriven
-      );
+      nextStint.totalStintLength = nextStint.timeDriven + nextStint.timeInPitlane;
+      nextStint.stintEndTime = new Date(stintStartTime.getTime() + nextStint.timeDriven + nextStint.timeInPitlane);
     } while (raceEndTime > nextStint.stintEndTime);
 
     nextStint.laps = nextStint.actualLaps ?? remainingLaps;
@@ -105,7 +99,7 @@ export class StintcalculatorService {
     currentRacePlan: RacePlanModel | undefined,
     stintCounter: number,
     defaultDriver: DriverModel,
-    drivers: DriverModel[],
+    driverPerStint: (DriverModel | undefined)[],
     stintStartTime: Date,
     fuel: number,
     tankSize: number,
@@ -113,7 +107,7 @@ export class StintcalculatorService {
     timeToPassPitlane: number
   ): StintModel {
     var refuelTime = Math.floor((tankSize - fuel) * refuelTimePerLiter);
-    var driver = this.getOrDefault(drivers, stintCounter, defaultDriver);
+    var driver = this.getOrDefault(driverPerStint, stintCounter, defaultDriver);
     var lapsInFullStint = this.getFromRaceplan(
       currentRacePlan,
       (rp) => rp.stints[stintCounter]?.actualLaps,
@@ -130,7 +124,7 @@ export class StintcalculatorService {
     var stintEndTime = this.getFromRaceplan<Date>(
       currentRacePlan,
       (rp) => rp.stints[stintCounter]?.actualStintEndTime,
-      new Date(stintStartTime.getTime() + timeDriven)
+      new Date(stintStartTime.getTime() + timeDriven + timeToPassPitlane + refuelTime)
     );
     if (stintEndTime.accessed) {
       timeDriven = Math.floor(
@@ -143,7 +137,7 @@ export class StintcalculatorService {
 
     return {
       counter: stintCounter,
-      driver: driver,
+      driver: driver.name,
       laps: lapsInFullStint.value,
       stintStartTime: stintStartTime,
       stintEndTime: stintEndTime.value,
@@ -170,10 +164,7 @@ export class StintcalculatorService {
     return { value: accessed ?? fallback, accessed: accessed };
   }
 
-  private getOrDefault<T>(array: T[], index: number, fallback: T): T {
-    if (array.length > index) {
-      return array[index];
-    }
-    return fallback;
+  private getOrDefault<T>(array: (T | undefined)[], index: number, fallback: T): T {
+    return (array.length > index && array[index])? array[index] : fallback;
   }
 }

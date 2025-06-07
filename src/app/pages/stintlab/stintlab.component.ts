@@ -1,4 +1,4 @@
-import { createEmptyRaceModel, RaceModel } from './../../models/race-model';
+import { createEmptyRaceModel, RaceModel } from '../../models/race-model';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -92,7 +92,7 @@ export class StintLabComponent implements OnInit {
   
   updateDriver(driver: DriverModel, stintCounter: number){
     this.logger.info('changing driver to ' + driver.name + 'for stint ' + stintCounter);
-    this.racePlan!.stints[stintCounter].driver = driver;
+    this.racePlan!.stints[stintCounter].driver = driver.name;
     this.calculateStints();
   }
 
@@ -165,14 +165,14 @@ export class StintLabComponent implements OnInit {
     this.validateInputs();
     
     if(this.validState) {
-      var driverPerStintList: DriverModel[] = [];
+      var driverPerStint: (DriverModel | undefined)[] = [];
+      var driverNameToDriverMap: Map<string, DriverModel> = new Map();
+      this.drivers.forEach(driver => driverNameToDriverMap.set(driver.name, driver));
       if(this.racePlan != undefined){
-        driverPerStintList = this.racePlan!.stints
-          .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
-          .map(d => d.driver!);
+        driverPerStint = this.racePlan!.stints.map(d => d && d.driver? driverNameToDriverMap.get(d.driver) : undefined);
       }
   
-      this.racePlan = this.stintcalculatorService.calculateStints(this.race, this.racePlan, driverPerStintList, this.drivers[0]);
+      this.racePlan = this.stintcalculatorService.calculateStints(this.race, this.racePlan, driverPerStint, driverNameToDriverMap, this.drivers[0]);
       this.persistPlan();
       this.showTable = true;
     }

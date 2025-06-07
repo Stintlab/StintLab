@@ -47,10 +47,10 @@
             <td>
               <p-select
                 [options]="drivers"
-                [ngModel]="stint.driver.name"
+                [ngModel]="stint.driver"
                 (ngModelChange)="updateDriver($event, stint.counter)"
                 optionLabel="name"
-                placeholder="{{ stint.driver.name }}"
+                placeholder="{{ stint.driver }}"
                 class="w-full md:w-56"
                 appendTo="body"
               />
