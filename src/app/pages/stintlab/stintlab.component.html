@@ -1,27 +1,26 @@
 <div class="container">
   <div class="configuration">
-      <p-panel class="race" header="Race">
-        <p class="m-0">
-          <app-racemanager
-            [(race)]="race"
-            (raceChange)="persistAndCalculateStints();"
-          ></app-racemanager>
-        </p>
-      </p-panel>
-      <p-panel class="driver" header="Drivers">
-        <p class="m-0">
-          <app-drivermanager
-            [(drivers)]="drivers"
-            (driversChange)="persistAndCalculateStints()"
-          ></app-drivermanager>
-        </p>
-      </p-panel>
+    <p-panel class="race" header="Race">
+      <p class="m-0">
+        <app-racemanager
+          [(race)]="race"
+          (raceChange)="persistAndCalculateStints()"
+        ></app-racemanager>
+      </p>
+    </p-panel>
+    <p-panel class="driver" header="Drivers">
+      <p class="m-0">
+        <app-drivermanager
+          [(drivers)]="drivers"
+          (driversChange)="persistAndCalculateStints()"
+        ></app-drivermanager>
+      </p>
+    </p-panel>
   </div>
   <div>
     @if(!validState){
-      <p>invalid input data, processing halted</p>
-    }
-    @if (showTable) {
+    <p>invalid input data, processing halted</p>
+    } @if (showTable) {
     <app-stats [drivers]="drivers" [racePlan]="racePlan"></app-stats>
     <p-panel header="Race Plan" [toggleable]="true">
       <p-table
@@ -48,24 +47,78 @@
             <td>
               <p-select
                 [options]="drivers"
-                [ngModel]="stint.driver.name"
-                (ngModelChange)="
-                  updateDriver($event, stint.counter)
-                "
+                [ngModel]="stint.driver"
+                (ngModelChange)="updateDriver($event, stint.counter)"
                 optionLabel="name"
-                placeholder="{{ stint.driver.name }}"
+                placeholder="{{ stint.driver }}"
                 class="w-full md:w-56"
                 appendTo="body"
               />
             </td>
-            <td>{{ stint.stintStartTime | date: 'dd.MM.yyyy HH:mm:ss z'}}</td>
-            <td>{{ stint.laps }}</td>
-            <td>{{ stint.fuelUsed | number : "1.0-2" }}</td>
+            <td>{{ stint.stintStartTime | date : "dd.MM.yyyy HH:mm:ss z" }}</td>
+            <td
+              [pEditableColumn]="stint.actualLaps"
+              pEditableColumnField="actualLaps"
+            >
+              <p-cellEditor>
+                <ng-template #input>
+                  <app-input-buffer 
+                    type="number"
+                    [value]="stint.actualLaps ?? stint.laps"
+                    (valueChange)="stint.actualLaps = $event"
+                    (valueChange)="calculateStints()"
+                  />
+                </ng-template>
+                <ng-template #output>
+                  {{ stint.actualLaps ?? stint.laps }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td
+              [pEditableColumn]="stint.actualFuelUsed"
+              pEditableColumnField="actualFuelUsed"
+            >
+              <p-cellEditor>
+                <ng-template #input>
+                  <app-input-buffer 
+                    type="number"
+                    [value]="stint.actualFuelUsed ?? stint.fuelUsed"
+                    (valueChange)="stint.actualFuelUsed = $event"
+                    (valueChange)="calculateStints()"
+                    [inputOptions]="{maxFractionDigits: 3}"
+                  />
+                </ng-template>
+                <ng-template #output>
+                  {{ (stint.actualFuelUsed ?? stint.fuelUsed) | number }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
             <td>{{ stint.timeDriven | millisToDuration }}</td>
             <td>{{ stint.timeInPitlane | millisToDuration }}</td>
             <td>{{ stint.refuelTime | millisToDuration }}</td>
             <td>{{ stint.totalStintLength | millisToDuration }}</td>
-            <td>{{ stint.stintEndTime | date: 'dd.MM.yyyy HH:mm:ss z' }}</td>
+            <td
+              [pEditableColumn]="stint.actualStintEndTime"
+              pEditableColumnField="actualStintEndTime"
+            >
+              <p-cellEditor>
+                <ng-template #input>
+                  <app-input-buffer 
+                    type="date"
+                    [value]="stint.actualStintEndTime ?? stint.stintEndTime"
+                    (valueChange)="stint.actualStintEndTime = $event"
+                    (valueChange)="calculateStints()"
+                    [inputOptions]="{showTime: true, hourFormat: '24', dateFormat: 'dd.mm.yy', showSeconds: true, appendTo: 'body'}"
+                  />
+                </ng-template>
+                <ng-template #output>
+                  {{
+                    stint.actualStintEndTime ?? stint.stintEndTime
+                      | date : "dd.MM.yyyy HH:mm:ss z"
+                  }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
           </tr>
         </ng-template>
       </p-table>

@@ -28,7 +28,7 @@ describe('StatsComponent', () => {
     };
     var stintModel: StintModel = {
       counter: 0,
-      driver: driver,
+      driver: driver.name,
       stintEndTime: new Date(),
       fuelUsed: undefined,
       laps: undefined,
@@ -36,7 +36,10 @@ describe('StatsComponent', () => {
       stintStartTime: undefined,
       timeDriven: undefined,
       timeInPitlane: undefined,
-      totalStintLength: undefined
+      totalStintLength: undefined,
+      actualFuelUsed: undefined,
+      actualLaps: undefined,
+      actualStintEndTime: undefined
     };
 
     component.racePlan = new RacePlanModel(0, [stintModel]);

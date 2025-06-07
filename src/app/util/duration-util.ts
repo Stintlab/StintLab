@@ -21,7 +21,7 @@ export class DurationUtil {
 
   static fromMilliseconds(millis: number) : DurationUtil {
     var t = new DurationUtil();
-    t.milliseconds = millis % 1000;
+    t.milliseconds = Math.floor(millis % 1000);
     var remainder = Math.floor(millis / 1000);
     t.seconds = remainder % 60;
     remainder = Math.floor(remainder / 60);
@@ -67,9 +67,5 @@ export class DurationUtil {
       result += '.' + formatNumber(this.milliseconds, 'en-US', '3.0');
     }
     return result;
-  }
-
-  static formatNumber(value: number, leadingZeros: number) : string {
-    return ('' + value).padStart(leadingZeros, '0');
   }
 }

@@ -36,11 +36,11 @@ export class StatsComponent {
 
     for (let i = 0; i < this.racePlan.stints.length; i++) {
       const stint = this.racePlan.stints[i];
-      this.setOrUpdate(lapDrivenMap, stint.driver!.name, stint.laps!);
-      this.setOrUpdate(timeDrivenMap, stint.driver!.name, stint.timeDriven!);
-      this.setOrUpdate(timeInPitsMap, stint.driver!.name, stint.timeInPitlane!);
+      this.setOrUpdate(lapDrivenMap, stint.driver!, stint.actualLaps ?? stint.laps!);
+      this.setOrUpdate(timeDrivenMap, stint.driver!, stint.timeDriven!);
+      this.setOrUpdate(timeInPitsMap, stint.driver!, stint.timeInPitlane!);
       //as stints need to be in order, we can always overwrite
-      lastStintMap.set(stint.driver!.name, stint.stintEndTime!);
+      lastStintMap.set(stint.driver!, stint.actualStintEndTime ?? stint.stintEndTime!);
       totalDriveTime += stint.timeDriven!;
       totalTimeInPitlane += stint.timeInPitlane!;
     }

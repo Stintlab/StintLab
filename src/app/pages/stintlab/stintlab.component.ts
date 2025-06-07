@@ -1,4 +1,4 @@
-import { createEmptyRaceModel, RaceModel } from './../../models/race-model';
+import { createEmptyRaceModel, RaceModel } from '../../models/race-model';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,11 +16,11 @@ import { StatsComponent } from "../../components/stats/stats.component";
 import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-duration.pipe";
 import { DriverModel } from '../../models/driver-model';
 import { RacePlanModel } from '../../models/race-plan-model';
+import { InputBufferComponent } from '../../components/input-buffer/input-buffer.component';
 
 @Component({
   selector: 'app-stintlab',
   imports: [
-    DecimalPipe,
     DatePipe,
     MillisToDurationPipe,
     FormsModule,
@@ -31,7 +31,9 @@ import { RacePlanModel } from '../../models/race-plan-model';
     SelectModule,
     DrivermanagerComponent,
     RacemanagerComponent,
-    StatsComponent
+    StatsComponent,
+    InputBufferComponent,
+    DecimalPipe
 ],
   templateUrl: './stintlab.component.html',
   styleUrl: './stintlab.component.scss'
@@ -56,9 +58,10 @@ export class StintLabComponent implements OnInit {
 
   ngOnInit(): void {
     var persistedRaceModel = this.localStorageServiceService.get<RaceModel>(StintLabComponent.RACE_STORAGE);
-    if(persistedRaceModel != null){
+    
+    if(persistedRaceModel){
       this.race = persistedRaceModel;
-      this.race.raceStart = new Date(this.race.raceStart!);
+      this.race.raceStart = this.race.raceStart ? new Date(this.race.raceStart!) : undefined;
     }
 
     var persistedDriverModels = this.localStorageServiceService.get<DriverModel[]>(StintLabComponent.DRIVER_STORAGE);
@@ -89,7 +92,7 @@ export class StintLabComponent implements OnInit {
   
   updateDriver(driver: DriverModel, stintCounter: number){
     this.logger.info('changing driver to ' + driver.name + 'for stint ' + stintCounter);
-    this.racePlan!.stints[stintCounter].driver = driver;
+    this.racePlan!.stints[stintCounter].driver = driver.name;
     this.calculateStints();
   }
 
@@ -158,17 +161,18 @@ export class StintLabComponent implements OnInit {
     this.localStorageServiceService.set<DriverModel[]>(StintLabComponent.DRIVER_STORAGE, this.drivers);
   }
   
-  private calculateStints(){
+  calculateStints(){
     this.validateInputs();
+    
     if(this.validState) {
-      var driverPerStintList: DriverModel[] = [];
+      var driverPerStint: (DriverModel | undefined)[] = [];
+      var driverNameToDriverMap: Map<string, DriverModel> = new Map();
+      this.drivers.forEach(driver => driverNameToDriverMap.set(driver.name, driver));
       if(this.racePlan != undefined){
-        driverPerStintList = this.racePlan!.stints
-        .filter(d => d.driver != undefined && this.drivers.includes(d.driver))
-        .map(d => d.driver!);
+        driverPerStint = this.racePlan!.stints.map(d => d && d.driver? driverNameToDriverMap.get(d.driver) : undefined);
       }
   
-      this.racePlan = this.stintcalculatorService.calculateStints(this.race, driverPerStintList, this.drivers[0]);
+      this.racePlan = this.stintcalculatorService.calculateStints(this.race, this.racePlan, driverPerStint, driverNameToDriverMap, this.drivers[0]);
       this.persistPlan();
       this.showTable = true;
     }
