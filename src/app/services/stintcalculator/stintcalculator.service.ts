@@ -9,7 +9,7 @@ import { RacePlanModel } from "../../models/race-plan-model";
   providedIn: "root",
 })
 export class StintcalculatorService {
-  constructor(private logger: NGXLogger) {}
+  constructor() {}
 
   calculateStints(
     race: RaceModel,

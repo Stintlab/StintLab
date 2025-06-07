@@ -1,4 +1,4 @@
-import { createEmptyRaceModel, RaceModel } from './../../models/race-model';
+import { createEmptyRaceModel, RaceModel } from '../../models/race-model';
 import { Component, OnInit } from '@angular/core';
 import { DecimalPipe, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';

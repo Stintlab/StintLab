@@ -1,4 +1,3 @@
-import { DriverModel } from './driver-model';
 export interface StintModel {
   counter: number;
   driver: string | undefined;
