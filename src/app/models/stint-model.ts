@@ -1,7 +1,7 @@
 import { DriverModel } from './driver-model';
 export interface StintModel {
   counter: number;
-  driver: DriverModel | undefined;
+  driver: string | undefined;
   stintStartTime: Date | undefined;
   laps: number | undefined;
   fuelUsed: number | undefined;
