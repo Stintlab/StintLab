@@ -28,7 +28,7 @@ describe('StatsComponent', () => {
     };
     var stintModel: StintModel = {
       counter: 0,
-      driver: driver,
+      driver: driver.name,
       stintEndTime: new Date(),
       fuelUsed: undefined,
       laps: undefined,
