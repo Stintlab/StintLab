@@ -1,16 +1,16 @@
-import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputBufferOptions } from '../../models/utils/input-buffer-options';
-import { PrimeDatePipe } from '../../pipes/prime-date/prime-date.pipe';
-import { DatePickerModule } from 'primeng/datepicker';
+import {CommonModule} from '@angular/common';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputBufferOptions} from '../../models/utils/input-buffer-options';
+import {PrimeDatePipe} from '../../pipes/prime-date/prime-date.pipe';
+import {DatePickerModule} from 'primeng/datepicker';
 
 @Component({
   selector: 'app-input-buffer',
   templateUrl: './input-buffer.component.html',
-  styleUrls: ['./input-buffer.component.css'],
+  styleUrls: ['./input-buffer.component.scss'],
   imports: [
     CommonModule,
     FormsModule,

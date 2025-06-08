@@ -12,10 +12,6 @@
   flex-direction: row;
   gap: 5px;
 
-  ::ng-deep .p-panel {
-    height: 100%;
-  }
-
   & > .race {
     min-width: 200px;
     width: 20vw;

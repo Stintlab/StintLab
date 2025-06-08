@@ -17,7 +17,11 @@ export const appConfig: ApplicationConfig = {
         theme: {
             preset: StintLab,
             options: {
-                darkModeSelector: '.dark-mode'
+                darkModeSelector: '.dark-mode',
+                cssLayer: {
+                    name: 'primeng',
+                    order: 'primeng, app-styles'
+                }
             }
         },
     }),

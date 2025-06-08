@@ -27,7 +27,7 @@ import { MillisToDurationPipe } from "../../pipes/millis-to-duration/millis-to-d
     MillisToDurationPipe
 ],
   templateUrl: './racemanager.component.html',
-  styleUrls: ['./racemanager.component.css']
+  styleUrls: ['./racemanager.component.scss']
 })
 export class RacemanagerComponent implements OnInit {
   @Input() race! : RaceModel;
