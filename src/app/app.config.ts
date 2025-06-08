@@ -3,9 +3,10 @@ import { provideRouter } from '@angular/router';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { LoggerModule, NgxLoggerLevel } from "ngx-logger";
 import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeng/themes/aura';
+
 
 import { routes } from './app.routes';
+import {StintLab} from "./app.theme";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -14,7 +15,10 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     providePrimeNG({
         theme: {
-            preset: Aura
+            preset: StintLab,
+            options: {
+                darkModeSelector: '.dark-mode'
+            }
         },
     }),
     importProvidersFrom(LoggerModule.forRoot({
