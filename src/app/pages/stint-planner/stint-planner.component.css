@@ -1,0 +1,3 @@
+.grid1to3Layout {
+  grid-template-columns: 1fr 3fr;
+}
