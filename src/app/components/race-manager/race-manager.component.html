@@ -1,39 +1,41 @@
-<div class="card w-full h-full shadow-md card-md">
-  <div class="card-body flex flex-col gap-2 p-4">
-    <h2 class="card-title">Race Management</h2>
-    <div class="join grid grid-cols-[8.5em_1fr] grid-rows-1">
-      <label class="join-item input w-full bg-(--color-base-300)">
-        <span class="text-(--color-base-content)">Race Start</span>
-      </label>
-      <input type="datetime-local" class="join-item input w-full" />
+<div class="card w-full h-full shadow-md card-md card-border border-base-300">
+  <div class="flex flex-col justify-between h-full p-4">
+    <div class="card-body flex flex-col gap-2 p-0">
+      <h2 class="card-title">Race Management</h2>
+      <div class="join grid grid-cols-[8.5em_1fr] grid-rows-1">
+        <label class="join-item input w-full bg-(--color-base-300)">
+          <span class="text-(--color-base-content)">Race Start</span>
+        </label>
+        <input type="datetime-local" class="join-item input w-full" />
+      </div>
+      <div class="join grid grid-cols-[8.5em_1fr_8.25em] grid-rows-1">
+        <label class="join-item input w-full bg-(--color-base-300)">
+          <span class="text-(--color-base-content)">Race Duration</span>
+        </label>
+        <input type="text" class="join-item input w-full border-r-1" />
+        <label class="join-item input w-full bg-(--color-base-300) border-l-0">
+          <span>hh:mm:ss</span>
+        </label>
+      </div>
+      <div class="join grid grid-cols-[8.5em_1fr_8.25em] grid-rows-1">
+        <label class="join-item input w-full bg-(--color-base-300)">
+          <span class="text-(--color-base-content)">Fueltank Size</span>
+        </label>
+        <input type="number" class="join-item input w-full border-r-1" />
+        <label class="join-item input w-full bg-(--color-base-300) border-l-0">
+          <span>Liters</span>
+        </label>
+      </div>
+      <div class="join grid grid-cols-[8.5em_1fr_8.25em] grid-rows-1">
+        <label class="join-item input w-full bg-(--color-base-300)">
+          <span class="text-(--color-base-content)">Refuel rate</span>
+        </label>
+        <input type="number" class="join-item input w-full border-r-1" />
+        <label class="join-item input w-full bg-(--color-base-300) border-l-0">
+          <span>Liters / second</span>
+        </label>
+      </div>
     </div>
-    <div class="join grid grid-cols-[8.5em_1fr_8.25em] grid-rows-1">
-      <label class="join-item input w-full bg-(--color-base-300)">
-        <span class="text-(--color-base-content)">Race Duration</span>
-      </label>
-      <input type="text" class="join-item input w-full border-r-1" />
-      <label class="join-item input w-full bg-(--color-base-300) border-l-0">
-        <span>hh:mm:ss</span>
-      </label>
-    </div>
-    <div class="join grid grid-cols-[8.5em_1fr_8.25em] grid-rows-1">
-      <label class="join-item input w-full bg-(--color-base-300)">
-        <span class="text-(--color-base-content)">Fueltank Size</span>
-      </label>
-      <input type="number" class="join-item input w-full border-r-1" />
-      <label class="join-item input w-full bg-(--color-base-300) border-l-0">
-        <span>Liters</span>
-      </label>
-    </div>
-    <div class="join grid grid-cols-[8.5em_1fr_8.25em] grid-rows-1">
-      <label class="join-item input w-full bg-(--color-base-300)">
-        <span class="text-(--color-base-content)">Refuel rate</span>
-      </label>
-      <input type="number" class="join-item input w-full border-r-1" />
-      <label class="join-item input w-full bg-(--color-base-300) border-l-0">
-        <span>Liters / second</span>
-      </label>
-    </div>
-    <button class="btn btn-md btn-primary h-9 self-end">Apply</button>
+    <button class="btn btn-md btn-primary h-9 self-end justify-self-end">Apply</button>
   </div>
 </div>
